@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewData["Title"] = "_LayoutCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" style="min-height:calc(100vh - 200px)">
+    <div class="col-3" style="background:#ffcfcf">
+        @await Component.InvokeAsync("Category")
+    </div>
+    <div class="col-9" style="background:#c9c9ff">
+        @RenderBody()
+    </div>
+</div>

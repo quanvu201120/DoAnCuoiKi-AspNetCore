@@ -16,3 +16,16 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.li-category {
+    position: relative;
+    right: 0;
+    transition: 0.5s;
+    
+}
+
+.li-category:hover {
+    right: 10px;
+    opacity:0.7;
+}
+
