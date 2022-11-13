@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/DoAnCuoiKi.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
+    <header >
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DoAnCuoiKi</a>
@@ -18,13 +18,57 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    @*<ul class="navbar-nav flex-grow-1">
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Users" asp-action="Index">Admin</a>
                         </li>
+
+                    </ul>*@
+                    <ul class="nav nav-pills" style="width:100%;padding:0 50px;">
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Danh mục sản phẩm</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Liên hệ</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Thanh toán</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Giới thiệu</a>
+                        </li>
+
+
+
+                        <li class="nav-item" style="margin-left:auto"></li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Admin" asp-controller="Users" asp-action="Index">Admin</a>
+                        </li>
+                        
+                        <li class="nav-item" >
+                            <a class="nav-link" asp-area="" asp-controller="" asp-action="">Giỏ hàng</a>
+                        </li>
+                        
+                        <li class="nav-item dropdown" >
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Quanvu201120@gmail.com</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
+                                <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                            </ul>
+                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -38,7 +82,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - DoAnCuoiKi - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - DoAnCuoiKi
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

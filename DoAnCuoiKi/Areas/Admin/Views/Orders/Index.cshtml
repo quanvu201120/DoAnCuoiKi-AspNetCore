@@ -1,0 +1,84 @@
+﻿@model IEnumerable<DoAnCuoiKi.Data.Order>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.customerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.customerAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.customerEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.customerPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.otherInformation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.totalPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dateCreate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.user)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.customerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.customerAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.customerEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.customerPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.otherInformation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.totalPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dateCreate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user.userId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.orderId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.orderId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.orderId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
