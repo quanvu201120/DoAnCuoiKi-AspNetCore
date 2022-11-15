@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DoAnCuoiKi.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DoAnCuoiKi.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class BrandsController : Controller
     {
         private readonly MyDbContext _context;

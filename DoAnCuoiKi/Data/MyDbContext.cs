@@ -25,7 +25,7 @@ namespace DoAnCuoiKi.Data
                 password = "123123",
                 name = "admin",
                 gender = 1,
-                role = 1,
+                role = "Admin",
                 phone = "0338786222",
                 address = "VN"
             };

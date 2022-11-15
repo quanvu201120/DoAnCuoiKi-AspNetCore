@@ -1,0 +1,126 @@
+﻿@{
+	Layout = null;
+}
+
+
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Login 10</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<link rel="stylesheet" href="~/css/style.css">
+
+</head>
+<body class="img js-fullheight" style="background-image: url(images/bg.jpg);">
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section">Đăng ký @ViewBag.Email </h2>
+				</div>									 
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-6 col-lg-4">
+					<div class="login-wrap p-0">
+						<form action="#" class="signin-form">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Họ tên" required>
+							</div>
+
+							<div style="text-align:center; ">
+								<div class="form-check form-check-inline">
+									<label class="form-check-label" for="radio1">
+										<input type="radio" class="form-check-input" id="radio1" name="optradio" value="1" checked>Nam
+									</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<label class="form-check-label" for="radio2">
+										<input type="radio" class="form-check-input" id="radio2" name="optradio" value="0">Nữ
+									</label>
+								</div>
+
+								<div class="form-group">
+									<input type="text" class="form-control" placeholder="Email" required>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<input id="password-field" type="password" class="form-control" placeholder="Mật khẩu" required>
+								<span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+							</div>
+
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Số điện thoại" required>
+							</div>
+							
+							<div class="form-group">
+								<input type="text" hidden="hidden" class="form-control" value="0"  placeholder="Role" required>
+							</div>
+
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Địa chỉ" required>
+							</div>
+
+
+							
+							<div class="form-group">
+								<button type="submit" id="btn-dang-nhap" class="form-control btn btn-primary submit px-3">Đăng ký</button>
+							</div>
+							
+						</form>
+						<p class="w-100 text-center">&mdash;&mdash; Hoặc  &mdash;&mdash;</p>
+						<div class="social d-flex text-center">
+							<a href="#" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Đăng nhập</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="~/js/popper.js"></script>
+	<script src="~/js/main.js"></script>
+
+	<script>
+		$(document).ready(() => {
+
+
+			const checkAccount = JSON.parse(localStorage.getItem('account_login_aspnet'))
+			if (checkAccount) {
+				document.getElementById('inputEmail').value = checkAccount.email
+				document.getElementById('password-field').value = checkAccount.password
+			}
+
+			const saveAccount = () => {
+
+				const isChecked = $('#cb_remember').is(":checked")
+				const email = document.getElementById('inputEmail').value
+				const password = document.getElementById('password-field').value
+				const account = { email: email, password: password }
+
+				if (isChecked) {
+					localStorage.setItem('account_login_aspnet', JSON.stringify(account))
+				}
+				else {
+					localStorage.removeItem('account_login_aspnet')
+				}
+			}
+			const btn_dang_nhap = document.getElementById("btn-dang-nhap")
+			btn_dang_nhap.addEventListener("click", saveAccount)
+
+
+
+		})
+	</script>
+
+</body>
+</html>
+

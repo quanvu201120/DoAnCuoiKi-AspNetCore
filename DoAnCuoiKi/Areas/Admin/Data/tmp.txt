@@ -1,0 +1,6 @@
+﻿namespace DoAnCuoiKi.Areas.Admin.Data
+{
+    public class tmp
+    {
+    }
+}

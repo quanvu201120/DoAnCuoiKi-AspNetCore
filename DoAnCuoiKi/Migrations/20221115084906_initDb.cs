@@ -49,7 +49,7 @@ namespace DoAnCuoiKi.Migrations
                     gender = table.Column<int>(type: "int", nullable: false),
                     password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    role = table.Column<int>(type: "int", nullable: false)
+                    role = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -170,7 +170,7 @@ namespace DoAnCuoiKi.Migrations
             migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "userId", "address", "email", "gender", "name", "password", "phone", "role" },
-                values: new object[] { 1, "VN", "admin@gmail.com", 1, "admin", "123123", "0338786222", 1 });
+                values: new object[] { 1, "VN", "admin@gmail.com", 1, "admin", "123123", "0338786222", "Admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cart_productId",

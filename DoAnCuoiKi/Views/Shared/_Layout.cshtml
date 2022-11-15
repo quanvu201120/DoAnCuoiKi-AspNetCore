@@ -29,7 +29,7 @@
                         </li>
 
                     </ul>*@
-                    <ul class="nav nav-pills" style="width:100%;padding:0 50px;">
+                    <ul class="nav nav-pills" style="width:100%;padding:0 100px;">
 
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Danh mục sản phẩm</a>
@@ -51,21 +51,26 @@
 
                         <li class="nav-item" style="margin-left:auto"></li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="Admin" asp-controller="Users" asp-action="Index">Admin</a>
-                        </li>
+                        @if(Context.User.IsInRole("Admin")){
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Admin" asp-controller="Users" asp-action="Index">Admin</a>
+                            </li>
+                        }
                         
                         <li class="nav-item" >
                             <a class="nav-link" asp-area="" asp-controller="" asp-action="">Giỏ hàng</a>
                         </li>
                         
                         <li class="nav-item dropdown" >
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Quanvu201120@gmail.com</a>
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" 
+                                href="#" role="button" aria-expanded="false">
+                                @Context.User.Identity.Name
+                            </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
                                 <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                                <li><a class="dropdown-item" asp-controller="Login" asp-action="Logout">Đăng xuất</a></li>
                             </ul>
                         </li>
 
