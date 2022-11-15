@@ -85,6 +85,58 @@ namespace DoAnCuoiKi.Migrations
                     b.HasKey("categoryId");
 
                     b.ToTable("Category");
+
+                    b.HasData(
+                        new
+                        {
+                            categoryId = 1,
+                            name = "Chuột - bàn phím"
+                        },
+                        new
+                        {
+                            categoryId = 2,
+                            name = "Thiết bị âm thanh"
+                        },
+                        new
+                        {
+                            categoryId = 3,
+                            name = "Linh kiện PC - Laptop"
+                        },
+                        new
+                        {
+                            categoryId = 4,
+                            name = "SSD"
+                        },
+                        new
+                        {
+                            categoryId = 5,
+                            name = "HDD"
+                        },
+                        new
+                        {
+                            categoryId = 6,
+                            name = "Ram máy tính"
+                        },
+                        new
+                        {
+                            categoryId = 7,
+                            name = "Ổ cứng di động"
+                        },
+                        new
+                        {
+                            categoryId = 8,
+                            name = "Ổ cứng SSD di động"
+                        },
+                        new
+                        {
+                            categoryId = 9,
+                            name = "Thẻ nhớ"
+                        },
+                        new
+                        {
+                            categoryId = 10,
+                            name = "USB"
+                        });
                 });
 
             modelBuilder.Entity("DoAnCuoiKi.Data.Order", b =>
@@ -217,8 +269,8 @@ namespace DoAnCuoiKi.Migrations
                     b.Property<string>("email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("gender")
-                        .HasColumnType("int");
+                    b.Property<string>("gender")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
@@ -242,7 +294,7 @@ namespace DoAnCuoiKi.Migrations
                             userId = 1,
                             address = "VN",
                             email = "admin@gmail.com",
-                            gender = 1,
+                            gender = "Nam",
                             name = "admin",
                             password = "123123",
                             phone = "0338786222",

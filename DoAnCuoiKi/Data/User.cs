@@ -4,8 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace DoAnCuoiKi.Data
 {
 
-    
-
     [Table("User")]
     public class User
     {
@@ -17,7 +15,7 @@ namespace DoAnCuoiKi.Data
 
         public string ? email { get; set; }
 
-        public int gender { get; set; }
+        public string? gender { get; set; }
 
         public string ? password { get; set; }
 

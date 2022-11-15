@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace DoAnCuoiKi.Migrations
 {
     /// <inheritdoc />
@@ -46,7 +48,7 @@ namespace DoAnCuoiKi.Migrations
                     name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    gender = table.Column<int>(type: "int", nullable: false),
+                    gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     role = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -168,9 +170,26 @@ namespace DoAnCuoiKi.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Category",
+                columns: new[] { "categoryId", "name" },
+                values: new object[,]
+                {
+                    { 1, "Chuột - bàn phím" },
+                    { 2, "Thiết bị âm thanh" },
+                    { 3, "Linh kiện PC - Laptop" },
+                    { 4, "SSD" },
+                    { 5, "HDD" },
+                    { 6, "Ram máy tính" },
+                    { 7, "Ổ cứng di động" },
+                    { 8, "Ổ cứng SSD di động" },
+                    { 9, "Thẻ nhớ" },
+                    { 10, "USB" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "userId", "address", "email", "gender", "name", "password", "phone", "role" },
-                values: new object[] { 1, "VN", "admin@gmail.com", 1, "admin", "123123", "0338786222", "Admin" });
+                values: new object[] { 1, "VN", "admin@gmail.com", "Nam", "admin", "123123", "0338786222", "Admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cart_productId",
