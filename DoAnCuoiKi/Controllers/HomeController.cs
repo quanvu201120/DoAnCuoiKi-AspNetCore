@@ -102,5 +102,14 @@ namespace DoAnCuoiKi.Controllers
         {
             return "/Home/Index?categoryId=" + categoryId + "&brandId=" + brandId + "&price=" + price;
         }
+
+        //Nhận id từ ajax trả về đường dẫn
+        //=> sau đó bên ajax success redirect tới đường dẫn
+        //=> action index lấy id trên đường dẫn và xử lí
+        [HttpPost]
+        public string HandleClickProduct(string productId)
+        {
+            return "/ProductDetail/Index?productId=" + productId;
+        }
     }
 }

@@ -85,7 +85,32 @@ body {
     text-overflow: ellipsis;
 }
 /*---Home product------------------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------------------*/
+
+/*---Product detail------------------------------------------------------------------------------------*/
+.product-detail {
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    border-radius:10px;
+}
+
+.product-detail h6 {
+    margin: 0;
+    line-height: 1.8;
+}
+.product-detail-name{
+    text-align:center;
+}
+
+.product-detail-text-title {
+    color: #0dcaf0;
+}
+
+.product-detail-text-maxheight{
+    max-height:300px;
+    overflow-y: auto;
+}
+
+/*---Product detail------------------------------------------------------------------------------------*/
 
 
 

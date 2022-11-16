@@ -34,14 +34,14 @@
 
 </div>
 
-<div class="row">
+<div class="row" style="max-height:calc(100vh - 200px); overflow-y:auto;">
     
     @if (Model != null && Model.products != null)
     {
         @foreach (var item in Model.products)
         {
             <div class="wrapper-item-product">
-                <div class="item-product">
+                <div class="item-product" data-productId="@item.productId">
                     @*<div class="item-product-img" style="background-image: url(images/imageTest.png);"></div>*@
                     <img class="item-product-img" src="~/Images/imageTest.png" alt="photo"/>
                     <span class="item-product-name">@item.name</span>
@@ -57,7 +57,7 @@
     <script>
         $(document).ready(() => {
 
-
+            //default value select
             $('#home-select-brandId-filter').val(@Model.brandId)
             $('#home-select-price-filter').val("@Model.price")
 
@@ -101,6 +101,30 @@
                     }
                 });
             });
+
+            //onClick product
+            (() => {
+                var itemProducts = document.querySelectorAll('.item-product');
+                itemProducts.forEach(item => {
+                    item.addEventListener('click', getSelectedIdProduct);
+                });
+            })();
+
+            function getSelectedIdProduct() {
+                var id = this.getAttribute("data-productId");
+
+                $.ajax({
+                    url: "/Home/HandleClickProduct",
+                    type: "post",
+                    data: {
+                        productId: id
+                    },
+                    success: function (data) {
+                        window.location.href = data;
+                    }
+                });
+
+            }
 
 
         })
