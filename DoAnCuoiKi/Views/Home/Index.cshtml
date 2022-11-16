@@ -1,8 +1,109 @@
-﻿
+﻿@model ProductDataModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutCategory.cshtml";
 }
 
-<h1>Index Home</h1>
+
+<div class="row">
+    <div class="col">
+        <h5 class="text-info">@Model?.categoryName</h5>
+    </div>
+    
+    <div class="col" style="display:flex; align-items:center;">
+        <span style="white-space:nowrap;">Thương hiệu</span> &nbsp;
+        <select id="home-select-brandId-filter" class="form-select" aria-label="Thương hiệu">
+            <option value="0">Tất cả</option>
+            @if (Model != null && Model.brands != null)
+            {
+                @foreach (var item in Model.brands)
+                {
+                    <option  value="@item.brandId">@item.name</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="col" style="display:flex; align-items:center;">
+        <span style="white-space:nowrap;">Giá</span> &nbsp;
+        <select id="home-select-price-filter" class="form-select" aria-label="Thương hiệu">
+            <option value="asc">Tăng dần</option>
+            <option value="desc">Giảm dần</option>
+        </select>
+    </div>
+
+</div>
+
+<div class="row">
+    
+    @if (Model != null && Model.products != null)
+    {
+        @foreach (var item in Model.products)
+        {
+            <div class="wrapper-item-product">
+                <div class="item-product">
+                    @*<div class="item-product-img" style="background-image: url(images/imageTest.png);"></div>*@
+                    <img class="item-product-img" src="~/Images/imageTest.png" alt="photo"/>
+                    <span class="item-product-name">@item.name</span>
+                    <span class="item-product-price">@item.price VNĐ </span>
+                </div>
+            </div>
+        }
+    }
+    
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(() => {
+
+
+            $('#home-select-brandId-filter').val(@Model.brandId)
+            $('#home-select-price-filter').val("@Model.price")
+
+            //onchange brand
+            $('#home-select-brandId-filter').on('change', function () {
+
+                const brandIdSelect = this.value;
+                const price = $("#home-select-price-filter").val();
+
+
+                $.ajax({
+                    url: "/Home/HanleClickFilter",
+                    type: "post",
+                    data: {
+                        categoryId: @Model.categoryId,
+                        brandId: brandIdSelect,
+                        price:  price,
+                    },
+                    success: function (data) {
+                        window.location.href = data;
+                    }
+                });
+            });
+
+            //onchange price
+            $('#home-select-price-filter').on('change', function () {
+
+                const priceSelect = this.value;
+                const brandId = $("#home-select-brandId-filter").val();
+
+                $.ajax({
+                    url: "/home/hanleclickfilter",
+                    type: "post",
+                    data: {
+                        categoryid: @Model.categoryId,
+                        brandid: brandId,
+                        price: priceSelect,
+                    },
+                    success: function (data) {
+                        window.location.href = data;
+                    }
+                });
+            });
+
+
+        })
+    </script>
+}
 

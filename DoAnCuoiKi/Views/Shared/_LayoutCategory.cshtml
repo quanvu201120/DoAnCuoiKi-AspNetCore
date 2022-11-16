@@ -4,11 +4,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+
 <div class="row" style="min-height:calc(100vh - 200px)">
-    <div class="col-3" style="background:#ffcfcf">
+    <div class="col-2">
         @await Component.InvokeAsync("Category")
     </div>
-    <div class="col-9" style="background:#c9c9ff">
+    <div class="col-10" style="max-height:calc(100vh - 200px); overflow-y:auto;">
         @RenderBody()
     </div>
 </div>

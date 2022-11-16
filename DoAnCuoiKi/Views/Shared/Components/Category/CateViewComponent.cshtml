@@ -1,18 +1,48 @@
 ﻿
 @model IEnumerable<DoAnCuoiKi.Data.Category>
 
-<p>
-    <a asp-action="Create"> view component category</a>
-</p>
-
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
 
 @if(Model != null){
     <ul style="padding:0">
         @foreach (var item in Model)
         {
-            <li style=" text-transform:uppercase; list-style:none; margin:3px 0;">
-                <button class="li-category btn btn-info w-100">@item.name</button>
+            <li style=" text-transform:uppercase; list-style:none; margin:3px 0; text-align:left">
+                <button data-categoryId='@item.categoryId' class="btn-item-category li-category btn btn-info w-100">@item.name</button>
             </li>
         }
     </ul>
 }
+
+
+<script >
+    $(document).ready(() => {
+
+        (()=>{
+            var btns = document.querySelectorAll('.btn-item-category');
+            btns.forEach(btn => {
+                btn.addEventListener('click', getSelectedId);
+            });
+        })();
+
+        function getSelectedId() {
+            var idCate = this.getAttribute("data-categoryId");
+
+            $.ajax({
+                url: "/Home/HanleClickFilter",
+                type: "post",
+                data: {
+                    categoryId: idCate
+                },
+                success: function (data) {
+                    window.location.href = data;
+                }
+            });
+
+        }
+
+    })
+</script>
+
