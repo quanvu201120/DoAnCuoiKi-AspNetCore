@@ -1,0 +1,110 @@
+﻿@model IEnumerable<DoAnCuoiKi.Data.Cart>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class=" cart-container" >
+
+    <div class=" cart-container-left">
+            @if(Model != null){
+                @foreach (var item in Model)
+                {
+                    <h1>@item.name - @item.price - @item.amount</h1>
+                }
+            }
+    </div>
+
+    <div class=" cart-container-right">
+        <form asp-action="HanleSubmitCart" asp-controller="Cart" method="post">
+            <div class="mb-3 row">
+                <label class="col-sm-4 col-form-label text-light">Tên người nhận*</label>
+                <div class="col-sm-8">
+                    <input required type="text" name="customerName" 
+                        class="form-control-plaintext text-light" 
+                        style="border:1px solid white; border-radius:3px; outline:none; padding-left: 10px;padding-right: 10px;" />
+                </div>
+            </div>
+            
+            <div class="mb-3 row">
+                <label class="col-sm-4 col-form-label text-light">Địa chỉ*</label>
+                <div class="col-sm-8">
+                    <input required type="text" name="customerAddress"
+                        class="form-control-plaintext text-light" 
+                        style="border:1px solid white; border-radius:3px; outline:none; padding-left: 10px;padding-right: 10px;" />
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-4 col-form-label text-light">Số điện thoại*</label>
+                <div class="col-sm-8">
+                    <input required type="text" name="customerPhone"
+                        class="form-control-plaintext text-light" 
+                        style="border:1px solid white; border-radius:3px; outline:none; padding-left: 10px;padding-right: 10px;" />
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-4 col-form-label text-light">Email</label>
+                <div class="col-sm-8">
+                    <input type="text" name="customerEmail"
+                        class="form-control-plaintext text-light" 
+                        style="border:1px solid white; border-radius:3px; outline:none; padding-left: 10px;padding-right: 10px;" />
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-4 col-form-label text-light">Thông tin thêm</label>
+                <div class="col-sm-8">
+                    <input type="text" name="otherInformation" 
+                        class="form-control-plaintext text-light" 
+                        style="border:1px solid white; border-radius:3px; outline:none; padding-left: 10px;padding-right: 10px;" />
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-4 col-form-label text-light">Tổng sản phẩm</label>
+                <div class="col-sm-8" style="display:flex">
+                    <input readonly type="text"  value="20000"
+                        class="form-control-plaintext text-light" 
+                        style="border:none; outline:none; text-align:right; padding-right:10px;" /> <span style="color:white; display:flex;align-items:center;">VNĐ</span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-4 col-form-label text-light">Phí vận chuyển</label>
+                <div class="col-sm-8" style="display:flex">
+                    <input readonly type="text" value="30000"
+                        class="form-control-plaintext text-light" 
+                        style="border:none; outline:none; text-align:right; padding-right:10px;" /> <span style="color:white; display:flex;align-items:center;">VNĐ</span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-4 col-form-label text-light">Tổng tiền</label>
+                <div class="col-sm-8" style="display:flex">
+                    <input readonly type="text" name="totalPrice" value="50000"
+                        class="form-control-plaintext text-light" 
+                        style="border:none; outline:none; text-align:right; padding-right:10px;" /> <span style="color:white; display:flex;align-items:center;">VNĐ</span>
+                </div>
+            </div>
+
+            <button type="submit"  class="btn btn-info w-100">Xác nhận đặt hàng &nbsp; <i class="fa-solid fa-arrow-right"></i></button>
+
+        </form>
+    </div>
+
+
+</div>
+
+
+
+
+
+@section Scripts{
+    <script>
+        $(document).ready(()=>{
+
+
+            
+
+
+        })
+    </script>
+}
+

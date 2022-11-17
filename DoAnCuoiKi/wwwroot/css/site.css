@@ -111,6 +111,29 @@ body {
 }
 
 /*---Product detail------------------------------------------------------------------------------------*/
+/*---Cart------------------------------------------------------------------------------------*/
+.cart-container {
+    height: calc(100vh - 150px);
+    display:flex;    
+    justify-content:space-evenly;
+}
+
+
+.cart-container-left, .cart-container-right {
+    margin: 5px;
+    border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding:20px;
+}
+
+.cart-container-left {
+    width:65%;
+}
+.cart-container-right {
+    width: 35%;
+    background: rgb(59,113,202);
+}
+    /*---Cart------------------------------------------------------------------------------------*/
 
 
 

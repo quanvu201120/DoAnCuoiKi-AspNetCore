@@ -20,11 +20,14 @@
         <hr/>
         <h6><b class="product-detail-text-title">Thương hiệu: </b>@Model.brandId</h6>
         <h6><b class="product-detail-text-title">Giá bán: </b>@Model.price VNĐ</h6>
-        <h6><b class="product-detail-text-title">Số lượng: </b>@Model.amount VNĐ</h6>
+        <h6><b class="product-detail-text-title">Số lượng: </b>@Model.amount</h6>
         <h6 class="product-detail-text-maxheight"><b class="product-detail-text-title">Mô tả sản phẩm: </b>@Model.description VNĐ</h6>
-        <div class="btn btn-info btn-add-product-cart" style="margin-top:10px;">
-            <i class="fa-solid fa-cart-plus"></i> &nbsp;
-            Thêm vào giỏ hàng
+        <div style="display:flex; justify-content:center; margin-top:10px;">
+            <input id="product-detail-input-count" class="form-control" type="number" min="1" value="1" style="width:20%; margin-right:10px;"/>
+            <div class="btn btn-info btn-add-product-cart">
+                <i class="fa-solid fa-cart-plus"></i> &nbsp;
+                Thêm vào giỏ hàng
+            </div>
         </div>
     </div>
 
@@ -51,11 +54,33 @@
 
         @*TOAST*@
             $(".btn-add-product-cart").click(()=>{
-                $('.toast').toast('show');
+                var count = $("#product-detail-input-count").val();
+                if(count <= 0 || count > @Model.amount){
+                    alert("Số lượng không hợp lệ")
+                }
+                else{
+                    
+                    $.ajax({
+                            url: "/ProductDetail/HandleAddProductToCart",
+                        type: "post",
+                        data: {
+                            productId: @Model.productId,
+                                count: count
+                        },
+                        success: function (data) {
+                            //window.location.href = data;
+                            //console.log("data => ",data)
+                            $('.toast').toast('show');
+                        }
+                    });
+
+                }
             })
+
             $(".close").click(() => {
                 $('.toast').toast('hide');
             })
+
         @*END TOAST*@
 
         });
