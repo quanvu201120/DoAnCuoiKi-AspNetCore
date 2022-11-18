@@ -44,9 +44,29 @@ namespace DoAnCuoiKi.Data
                 new Category{categoryId=10,name="USB"}
             };
 
+            var listBrand = new List<Brand>
+            {
+                new Brand{ brandId=1, name = "ASUS"},
+                new Brand{ brandId=2, name = "GIGABYTE"},
+                new Brand{ brandId=3, name = "MSI"},
+                new Brand{ brandId=4, name = "Asrock"},
+                new Brand{ brandId=5, name = "Intel"},
+                new Brand{ brandId=6, name = "Samsung"},
+                new Brand{ brandId=7, name = "Apacer"},
+                new Brand{ brandId=8, name = "Kingston"},
+                new Brand{ brandId=9, name = "Kingmax"},
+                new Brand{ brandId=10, name = "Sony"},
+                new Brand{ brandId=11, name = "JBL"},
+                new Brand{ brandId=12, name = "Sennheiser"},
+                new Brand{ brandId=13, name = "Corsair"},
+                new Brand{ brandId=14, name = "Logitech"},
+                new Brand{ brandId=15, name = "Apple"},
+            };
+
 
             modelBuilder.Entity<User>().HasData(user);
             modelBuilder.Entity<Category>().HasData(listCate);
+            modelBuilder.Entity<Brand>().HasData(listBrand);
 
             base.OnModelCreating(modelBuilder);
         }

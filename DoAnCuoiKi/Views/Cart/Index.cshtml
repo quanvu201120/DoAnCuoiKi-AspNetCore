@@ -102,8 +102,9 @@
                 </div>
             </div>
             @if(ViewBag.tongTien > 0){
-                <button type="submit"  class="btn btn-info w-100">Xác nhận đặt hàng &nbsp; <i class="fa-solid fa-arrow-right"></i></button>
+                <button type="button"  class="cart-btn-check btn btn-info w-100">Xác nhận đặt hàng</button>
             }
+            <button type="submit" class="cart-btn-confirm my-disable btn btn-info w-100">Đặt hàng &nbsp; <i class="fa-solid fa-arrow-right"></i></button>
 
         </form>
     </div>
@@ -169,6 +170,25 @@
             }
             //end onClick DELETE CART
 
+
+            //onClick confirm
+            $(".cart-btn-check").click(function(){
+                const btnCheck = document.querySelector(".cart-btn-check")
+                const btnConfirm = document.querySelector(".cart-btn-confirm")
+
+                const customerName = $("input[name='customerName']").val().trim()
+                const customerAddress = $("input[name='customerAddress']").val().trim()
+                const customerPhone = $("input[name='customerPhone']").val().trim()
+
+                if (customerName.length == 0 || customerAddress.length == 0 || customerPhone.length == 0) {
+                    alert("Vui lòng nhập đầy đủ thông tin")
+                    return
+                }
+
+                btnCheck.classList.add("my-disable")
+                btnConfirm.classList.remove("my-disable")
+            })
+            //end onClick confirm 
 
         })
     </script>

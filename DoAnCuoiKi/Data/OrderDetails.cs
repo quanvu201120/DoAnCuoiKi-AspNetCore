@@ -10,16 +10,15 @@ namespace DoAnCuoiKi.Data
         public int orderDetailsId { get; set; }
 
         public string ? productName { get; set; }
-        public string ? productPrice { get; set; }
+        public double productPrice { get; set; }
         public string ? image { get; set; }
         public int productAmout { get; set; }
 
         public double totalPrice { get; set; }
 
-
         public int orderId { get; set; }
 
-        [ForeignKey("userId")]
+        [ForeignKey("orderId")]
         public Order ? order { get; set; }
     }
 }

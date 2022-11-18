@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DoAnCuoiKi.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20221118040530_initDb")]
+    [Migration("20221118094105_initDb")]
     partial class initDb
     {
         /// <inheritdoc />
@@ -40,6 +40,83 @@ namespace DoAnCuoiKi.Migrations
                     b.HasKey("brandId");
 
                     b.ToTable("Brand");
+
+                    b.HasData(
+                        new
+                        {
+                            brandId = 1,
+                            name = "ASUS"
+                        },
+                        new
+                        {
+                            brandId = 2,
+                            name = "GIGABYTE"
+                        },
+                        new
+                        {
+                            brandId = 3,
+                            name = "MSI"
+                        },
+                        new
+                        {
+                            brandId = 4,
+                            name = "Asrock"
+                        },
+                        new
+                        {
+                            brandId = 5,
+                            name = "Intel"
+                        },
+                        new
+                        {
+                            brandId = 6,
+                            name = "Samsung"
+                        },
+                        new
+                        {
+                            brandId = 7,
+                            name = "Apacer"
+                        },
+                        new
+                        {
+                            brandId = 8,
+                            name = "Kingston"
+                        },
+                        new
+                        {
+                            brandId = 9,
+                            name = "Kingmax"
+                        },
+                        new
+                        {
+                            brandId = 10,
+                            name = "Sony"
+                        },
+                        new
+                        {
+                            brandId = 11,
+                            name = "JBL"
+                        },
+                        new
+                        {
+                            brandId = 12,
+                            name = "Sennheiser"
+                        },
+                        new
+                        {
+                            brandId = 13,
+                            name = "Corsair"
+                        },
+                        new
+                        {
+                            brandId = 14,
+                            name = "Logitech"
+                        },
+                        new
+                        {
+                            brandId = 15,
+                            name = "Apple"
+                        });
                 });
 
             modelBuilder.Entity("DoAnCuoiKi.Data.Cart", b =>
@@ -207,18 +284,15 @@ namespace DoAnCuoiKi.Migrations
                     b.Property<string>("productName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("productPrice")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("productPrice")
+                        .HasColumnType("float");
 
                     b.Property<double>("totalPrice")
                         .HasColumnType("float");
 
-                    b.Property<int?>("userId")
-                        .HasColumnType("int");
-
                     b.HasKey("orderDetailsId");
 
-                    b.HasIndex("userId");
+                    b.HasIndex("orderId");
 
                     b.ToTable("OrderDetails");
                 });
@@ -342,7 +416,9 @@ namespace DoAnCuoiKi.Migrations
                 {
                     b.HasOne("DoAnCuoiKi.Data.Order", "order")
                         .WithMany()
-                        .HasForeignKey("userId");
+                        .HasForeignKey("orderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("order");
                 });

@@ -153,21 +153,43 @@ namespace DoAnCuoiKi.Migrations
                     orderDetailsId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     productName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    productPrice = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    productPrice = table.Column<double>(type: "float", nullable: false),
                     image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     productAmout = table.Column<int>(type: "int", nullable: false),
                     totalPrice = table.Column<double>(type: "float", nullable: false),
-                    orderId = table.Column<int>(type: "int", nullable: false),
-                    userId = table.Column<int>(type: "int", nullable: true)
+                    orderId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderDetails", x => x.orderDetailsId);
                     table.ForeignKey(
-                        name: "FK_OrderDetails_Order_userId",
-                        column: x => x.userId,
+                        name: "FK_OrderDetails_Order_orderId",
+                        column: x => x.orderId,
                         principalTable: "Order",
-                        principalColumn: "orderId");
+                        principalColumn: "orderId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Brand",
+                columns: new[] { "brandId", "name" },
+                values: new object[,]
+                {
+                    { 1, "ASUS" },
+                    { 2, "GIGABYTE" },
+                    { 3, "MSI" },
+                    { 4, "Asrock" },
+                    { 5, "Intel" },
+                    { 6, "Samsung" },
+                    { 7, "Apacer" },
+                    { 8, "Kingston" },
+                    { 9, "Kingmax" },
+                    { 10, "Sony" },
+                    { 11, "JBL" },
+                    { 12, "Sennheiser" },
+                    { 13, "Corsair" },
+                    { 14, "Logitech" },
+                    { 15, "Apple" }
                 });
 
             migrationBuilder.InsertData(
@@ -208,9 +230,9 @@ namespace DoAnCuoiKi.Migrations
                 column: "userId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderDetails_userId",
+                name: "IX_OrderDetails_orderId",
                 table: "OrderDetails",
-                column: "userId");
+                column: "orderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Product_brandId",

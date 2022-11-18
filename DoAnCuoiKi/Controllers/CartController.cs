@@ -48,12 +48,38 @@ namespace DoAnCuoiKi.Controllers
             order.dateCreate = DateTime.Now;
             var userId = HttpContext.User.Claims.FirstOrDefault(item => item.Type == "userId").Value;
 
+            var myCarts = await myDbContext.carts.Where(item => item.userId.ToString() == userId).ToListAsync();
+
             order.userId = int.Parse(userId);
 
             myDbContext.orders.Add(order);
             await myDbContext.SaveChangesAsync();
 
             var orderId = order.orderId;
+
+            myCarts.ForEach(async item => {
+
+                var productUpdate =  myDbContext.products.FirstOrDefault(product => product.productId == item.productId);
+
+                productUpdate.amount -= item.amount;
+                myDbContext.products.Update(productUpdate);
+
+                var orderDetails = new OrderDetails
+                {
+                    productName = item.name,
+                    productPrice = item.price,
+                    image = item.image,
+                    productAmout = item.amount,
+                    totalPrice = item.amount * item.price,
+                    orderId = orderId,
+                };
+                myDbContext.OrderDetails.Add(orderDetails);
+                 myDbContext.SaveChanges();
+            });
+
+            myDbContext.carts.RemoveRange(myCarts);
+
+            await myDbContext.SaveChangesAsync();
 
             return RedirectToAction("Index");
         }
