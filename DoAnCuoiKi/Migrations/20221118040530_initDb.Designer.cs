@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DoAnCuoiKi.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20221115124555_initDb")]
+    [Migration("20221118040530_initDb")]
     partial class initDb
     {
         /// <inheritdoc />
@@ -52,6 +52,9 @@ namespace DoAnCuoiKi.Migrations
 
                     b.Property<int>("amount")
                         .HasColumnType("int");
+
+                    b.Property<string>("image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");

@@ -50,6 +50,9 @@ namespace DoAnCuoiKi.Migrations
                     b.Property<int>("amount")
                         .HasColumnType("int");
 
+                    b.Property<string>("image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
 

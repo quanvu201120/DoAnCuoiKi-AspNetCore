@@ -70,7 +70,12 @@
                         success: function (data) {
                             //window.location.href = data;
                             //console.log("data => ",data)
-                            $('.toast').toast('show');
+                            if(data == "true"){
+                                $('.toast').toast('show');
+                            }
+                            else{
+                                 alert("Số lượng sản phẩm còn lại không đủ")
+                            }
                         }
                     });
 

@@ -123,6 +123,7 @@ namespace DoAnCuoiKi.Migrations
                     cartId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     amount = table.Column<int>(type: "int", nullable: false),
                     price = table.Column<double>(type: "float", nullable: false),
                     userId = table.Column<int>(type: "int", nullable: false),

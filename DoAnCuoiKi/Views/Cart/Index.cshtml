@@ -4,13 +4,31 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class=" cart-container" >
+<div class="cart-container" >
 
-    <div class=" cart-container-left">
+    <div class="cart-container-left">
             @if(Model != null){
                 @foreach (var item in Model)
                 {
-                    <h1>@item.name - @item.price - @item.amount</h1>
+                    <div class="cart-item">
+                        <div class="cart-item-img">
+                            <img src="~/Images/imageTest.png" alt="photo" />
+                        </div>
+
+                        <div class="cart-item-content">
+                            <h3 class="cart-item-content-name">@item.name</h3>
+                            <h3 class="cart-item-content-price">@item.price đ</h3>
+                        </div>
+                        <div class="cart-item-amount">
+                            @*<h3 class="cart-item-amount-text">Số lượng</h3>*@
+                            <div class="cart-item-amout-action">
+                                <div class=" cart-item-amount-action-btn" data-change="-" data-id="@item.cartId">-</div>
+                                <h3 class="cart-item-amount-action-count">@item.amount</h3>
+                                <div class=" cart-item-amount-action-btn" data-change="+" data-id="@item.cartId">+</div>
+                            </div>
+                        </div>
+                        <div data-id="@item.cartId" class="btn-delete-cart btn btn-danger" style="height:24px; display:flex; align-items:center;">Xóa</div>
+                    </div>
                 }
             }
     </div>
@@ -62,7 +80,7 @@
             <div class="mb-3 row">
                 <label class="col-sm-4 col-form-label text-light">Tổng sản phẩm</label>
                 <div class="col-sm-8" style="display:flex">
-                    <input readonly type="text"  value="20000"
+                    <input readonly type="text"  value="@ViewBag.tongSanPham"
                         class="form-control-plaintext text-light" 
                         style="border:none; outline:none; text-align:right; padding-right:10px;" /> <span style="color:white; display:flex;align-items:center;">VNĐ</span>
                 </div>
@@ -70,7 +88,7 @@
             <div class="mb-3 row">
                 <label class="col-sm-4 col-form-label text-light">Phí vận chuyển</label>
                 <div class="col-sm-8" style="display:flex">
-                    <input readonly type="text" value="30000"
+                    <input readonly type="text" value="@ViewBag.phiVanChuyen"
                         class="form-control-plaintext text-light" 
                         style="border:none; outline:none; text-align:right; padding-right:10px;" /> <span style="color:white; display:flex;align-items:center;">VNĐ</span>
                 </div>
@@ -78,13 +96,14 @@
             <div class="mb-3 row">
                 <label class="col-sm-4 col-form-label text-light">Tổng tiền</label>
                 <div class="col-sm-8" style="display:flex">
-                    <input readonly type="text" name="totalPrice" value="50000"
+                    <input readonly type="text" name="totalPrice" value="@ViewBag.tongTien"
                         class="form-control-plaintext text-light" 
                         style="border:none; outline:none; text-align:right; padding-right:10px;" /> <span style="color:white; display:flex;align-items:center;">VNĐ</span>
                 </div>
             </div>
-
-            <button type="submit"  class="btn btn-info w-100">Xác nhận đặt hàng &nbsp; <i class="fa-solid fa-arrow-right"></i></button>
+            @if(ViewBag.tongTien > 0){
+                <button type="submit"  class="btn btn-info w-100">Xác nhận đặt hàng &nbsp; <i class="fa-solid fa-arrow-right"></i></button>
+            }
 
         </form>
     </div>
@@ -101,7 +120,54 @@
         $(document).ready(()=>{
 
 
-            
+            //onClick change count
+            (() => {
+                var btnChanges = document.querySelectorAll('.cart-item-amount-action-btn');
+                btnChanges.forEach(item => {
+                    item.addEventListener('click', onClickHanleChangeCount);
+                });
+            })();
+
+            function onClickHanleChangeCount(){
+                var idCart = this.getAttribute("data-id");
+                var action = this.getAttribute("data-change");
+
+                $.ajax({
+                    url: "/Cart/HanleChangeCount",
+                    type: "post",
+                    data: {
+                        action: action,
+                        idCart: idCart
+                    },
+                    success: function (data) {
+                        window.location.reload()
+                    }
+                });
+            }
+            //end onClick change count
+            //onClick DELETE CART
+            (() => {
+                var btnDeletes = document.querySelectorAll('.btn-delete-cart');
+                btnDeletes.forEach(item => {
+                    item.addEventListener('click', onClickHanleDeleteCart);
+                });
+            })();
+
+            function onClickHanleDeleteCart(){
+                var idCart = this.getAttribute("data-id");
+
+                $.ajax({
+                    url: "/Cart/HanleDeleteCart",
+                    type: "post",
+                    data: {
+                        idCart: idCart
+                    },
+                    success: function (data) {
+                        window.location.reload()
+                    }
+                });
+            }
+            //end onClick DELETE CART
 
 
         })

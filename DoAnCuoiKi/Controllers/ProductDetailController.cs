@@ -35,18 +35,35 @@ namespace DoAnCuoiKi.Controllers
             var product = _context.products.SingleOrDefault(item => item.productId.ToString() == productId);
             var userId = int.Parse(HttpContext.User.Claims.FirstOrDefault(item => item.Type == "userId").Value);
 
-            var cartAdd = new Cart
-            {
-                name = product.name,
-                price = product.price,
-                productId = int.Parse(productId),
-                userId = userId,
-                amount = count,
-                
-            };
-            _context.carts.Add(cartAdd);
-            _context.SaveChanges();
+            var cartExits = _context.carts.SingleOrDefault(item => item.userId == userId && item.productId == product.productId); ;
 
+            if(cartExits == null)
+            {
+                var cartAdd = new Cart
+                {
+                    name = product.name,
+                    price = product.price,
+                    productId = int.Parse(productId),
+                    userId = userId,
+                    amount = count,
+                    image = product.image,
+
+                };
+                _context.carts.Add(cartAdd);
+            }
+            else
+            {
+                cartExits.amount += count;
+
+                if(cartExits.amount > product.amount)
+                {
+                    return "false";
+
+                }
+                _context.carts.Update(cartExits);
+            }
+
+            _context.SaveChanges();
             return "true";
         }
     }
