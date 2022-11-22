@@ -7,7 +7,7 @@ namespace DoAnCuoiKi.Data
     public class Category
     {
         [Key]
-        public int categoryId { get; set; }
+        public int? categoryId { get; set; }
         public string ? name { get; set; }
 
     }

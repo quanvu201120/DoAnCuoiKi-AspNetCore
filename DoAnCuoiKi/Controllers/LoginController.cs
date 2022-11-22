@@ -37,6 +37,9 @@ namespace DoAnCuoiKi.Controllers
                 {
                     new Claim(ClaimTypes.Name,acccount.name),
                     new Claim("userId",acccount.userId.ToString()),
+                    new Claim("address",acccount.address.ToString()),
+                    new Claim("phone",acccount.phone.ToString()),
+                    new Claim("email",acccount.email.ToString()),
                     new Claim(ClaimTypes.Role,acccount.role.ToString())
                 };
                

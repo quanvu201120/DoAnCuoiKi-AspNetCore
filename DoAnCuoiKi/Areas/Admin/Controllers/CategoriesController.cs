@@ -104,7 +104,7 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoryExists(category.categoryId))
+                    if (!CategoryExists((int)category.categoryId))
                     {
                         return NotFound();
                     }

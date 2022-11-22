@@ -104,7 +104,7 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BrandExists(brand.brandId))
+                    if (!BrandExists((int)brand.brandId))
                     {
                         return NotFound();
                     }

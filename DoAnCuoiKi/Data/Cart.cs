@@ -7,7 +7,7 @@ namespace DoAnCuoiKi.Data
     public class Cart
     {
         [Key]
-        public int cartId { get; set; }
+        public int? cartId { get; set; }
 
         public string ? name { get; set; }
         

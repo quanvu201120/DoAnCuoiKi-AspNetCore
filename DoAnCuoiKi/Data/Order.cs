@@ -7,7 +7,7 @@ namespace DoAnCuoiKi.Data
     public class Order
     {
         [Key]
-        public int orderId { get; set; }
+        public int? orderId { get; set; }
         
         public string ? customerName { get; set; }
         public string ? customerAddress { get; set; }
@@ -16,6 +16,7 @@ namespace DoAnCuoiKi.Data
         public string ? otherInformation { get; set; }
         public double totalPrice { get; set; }
         public DateTime dateCreate { get; set; }
+        public DateTime? dateReceive { get; set; }
         public int status { get; set; }
         public int userId { get; set; }
 

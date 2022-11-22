@@ -109,7 +109,7 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OrderExists(order.orderId))
+                    if (!OrderExists((int)order.orderId))
                     {
                         return NotFound();
                     }

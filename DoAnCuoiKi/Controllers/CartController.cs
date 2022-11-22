@@ -19,6 +19,10 @@ namespace DoAnCuoiKi.Controllers
         public IActionResult Index()
         {
             var userId = HttpContext.User.Claims.FirstOrDefault(item => item.Type == "userId").Value;
+            var name = HttpContext.User.Identity.Name;
+            var address = HttpContext.User.Claims.FirstOrDefault(item => item.Type == "address").Value;
+            var phone = HttpContext.User.Claims.FirstOrDefault(item => item.Type == "phone").Value;
+            var email = HttpContext.User.Claims.FirstOrDefault(item => item.Type == "email").Value;
 
             var myCarts = myDbContext.carts.Where(item => item.userId.ToString() == userId).ToList();
 
@@ -34,6 +38,11 @@ namespace DoAnCuoiKi.Controllers
                 phiVanChuyen = 50000;
             }
 
+
+            ViewBag.name = name ;
+            ViewBag.address = address ;
+            ViewBag.phone = phone ;
+            ViewBag.email = email;
 
             ViewBag.tongSanPham = tongSanPham;
             ViewBag.phiVanChuyen = phiVanChuyen;
@@ -71,7 +80,7 @@ namespace DoAnCuoiKi.Controllers
                     image = item.image,
                     productAmout = item.amount,
                     totalPrice = item.amount * item.price,
-                    orderId = orderId,
+                    orderId = (int)orderId,
                 };
                 myDbContext.OrderDetails.Add(orderDetails);
                  myDbContext.SaveChanges();

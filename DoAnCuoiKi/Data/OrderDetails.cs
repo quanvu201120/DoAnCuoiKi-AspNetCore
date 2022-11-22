@@ -7,7 +7,7 @@ namespace DoAnCuoiKi.Data
     public class OrderDetails
     {
         [Key]
-        public int orderDetailsId { get; set; }
+        public int? orderDetailsId { get; set; }
 
         public string ? productName { get; set; }
         public double productPrice { get; set; }

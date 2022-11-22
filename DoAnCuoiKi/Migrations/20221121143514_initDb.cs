@@ -19,7 +19,7 @@ namespace DoAnCuoiKi.Migrations
                 {
                     brandId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -102,6 +102,7 @@ namespace DoAnCuoiKi.Migrations
                     otherInformation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     totalPrice = table.Column<double>(type: "float", nullable: false),
                     dateCreate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    dateReceive = table.Column<DateTime>(type: "datetime2", nullable: true),
                     status = table.Column<int>(type: "int", nullable: false),
                     userId = table.Column<int>(type: "int", nullable: false)
                 },

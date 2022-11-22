@@ -240,6 +240,123 @@ body {
 
 
 /*---Cart------------------------------------------------------------------------------------*/
+/*---Order------------------------------------------------------------------------------------*/
+
+.order-container {
+    background: white;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    border-radius: 10px;
+    padding: 10px;
+    height: calc(100vh - 200px);
+}
+.order-header{
+    text-align:center;
+    font-size:2rem;
+}
+
+.list-order {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 200px);
+    overflow-y:auto;
+}
+.item-order {
+    display: flex;
+    border-radius: 5px;
+    padding: 10px;
+    background: #50ffe4;
+    border: 1px solid #50ffe4;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+}
+
+.item-order + .item-order{
+    margin-top:20px;
+}
+
+.item-order h4,
+.item-order a {
+    font-size: 18px;
+    text-decoration: none;
+    margin: 10px;
+    padding: 0;
+}
+
+.item-order-1 {
+    width: 40%;
+}
+.item-order-2{
+    width:40%;
+}
+.item-order-3{
+    width:20%;
+}
+
+
+/*---Order------------------------------------------------------------------------------------*/
+/*---OrderDetail------------------------------------------------------------------------------------*/
+.order-detail-container {
+    background: white;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    border-radius: 10px;
+    padding: 10px;
+    min-height: calc(100vh - 200px);
+}
+
+.orderDetail-header{
+   font-size:25px;
+   color:orange;
+   text-align:center;
+}
+
+.orderDetail-box-content {
+    display:flex;
+}
+.orderDetail-box-item{
+    width:50%;
+    font-size:18px;
+    line-height:1.8;
+}
+
+.orderDetail-listDetail{
+}
+
+.orderDetail-itemDetail{
+    display:flex;
+    padding:10px;
+    border:1px dashed #cbcbcb;
+    border-radius:5px;
+}
+.orderDetail-itemDetail + .orderDetail-itemDetail{
+    margin-top:10px;
+}
+
+.orderDetail-itemDetail-img {
+    width: 10%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.orderDetail-itemDetail-img img{
+    width:60%;
+    border-radius:3px;
+}
+
+.orderDetail-itemDetail-2,
+.orderDetail-itemDetail-1{
+    width:45%;
+    display:flex;
+    flex-direction:column;
+}
+
+.orderDetail-itemDetail-content{
+    font-size:18px;
+    margin:5px;
+}
+
+/*---OrderDetail------------------------------------------------------------------------------------*/
 
 
 

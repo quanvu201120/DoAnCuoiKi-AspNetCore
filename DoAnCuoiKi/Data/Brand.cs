@@ -7,8 +7,8 @@ namespace DoAnCuoiKi.Data
     public class Brand
     {
         [Key]
-        public int brandId { get; set; }
+        public int? brandId { get; set; }
 
-        public string name { get; set; }
+        public string? name { get; set; }
     }
 }

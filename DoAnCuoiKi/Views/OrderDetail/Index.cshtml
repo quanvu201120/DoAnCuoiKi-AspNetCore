@@ -1,0 +1,56 @@
+﻿@model DoAnCuoiKi.Models.OrderDetailModelcs
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var trangthai = Model?.order?.status == 0 ? "Chờ vận chuyển" : Model?.order?.status == 1 ? "Đang giao" : "Đã giao";
+}
+
+
+<div class="order-detail-container">
+    <h1 class="orderDetail-header">Chi tiết đơn hàng</h1>
+    <div class="orderDetail-box-content">
+        <h3 class="orderDetail-box-item"> <b>Khách hàng: </b> @Model.order.customerName </h3>
+        <h3 class="orderDetail-box-item"> <b>Trạng thái đơn hàng: </b> @trangthai </h3>
+    </div>
+    <div class="orderDetail-box-content">
+        <h3 class="orderDetail-box-item"> <b>Địa chỉ nhận hàng: </b> @Model.order.customerAddress </h3>
+        <h3 class="orderDetail-box-item"> <b>Tổng tiền: </b> @Model.order.totalPrice </h3>
+    </div>
+    <div class="orderDetail-box-content">
+        <h3 class="orderDetail-box-item"> <b>Ngày đặt hàng: </b> @Model.order.dateCreate </h3>
+        <h3 class="orderDetail-box-item"> <b>Ngày nhận hàng: </b> @Model.order.dateReceive </h3>
+    </div>
+    <div class="orderDetail-box-content">
+        <h3 class="orderDetail-box-item"> <b>Số điện thoại: </b> @Model.order.customerPhone </h3>
+        <h3 class="orderDetail-box-item"> <b>Tổng thanh toán: </b> @Model.order.totalPrice VNĐ</h3>
+    </div>
+
+    <span class="orderDetail-orderInfo"><b>Thông tin khác:  </b>@Model.order.otherInformation</span>
+
+    <hr/>
+    <h6 class="text-center text-info mt-0">Danh sách sản phẩm</h6>
+
+    <div class="orderDetail-listDetail">
+
+        @foreach (var item in Model.orderDetails)
+        {
+            <div class="orderDetail-itemDetail">
+                <div class="orderDetail-itemDetail-img">
+                    <img src="~/Images/imageTest.png" alt="photo" />
+                </div>
+
+                <div class="orderDetail-itemDetail-1">
+                    <h3 class="orderDetail-itemDetail-content"> <b>Tên sản phẩm: </b> @item.productName </h3>
+                    <h3 class="orderDetail-itemDetail-content text-info"> <b class="text-black">Giá: </b> @item.productPrice VNĐ</h3>
+                </div>
+                <div class="orderDetail-itemDetail-2">
+                    <h3 class="orderDetail-itemDetail-content"> <b>Số lượng: </b> @item.productAmout</h3>
+                    <h3 class="orderDetail-itemDetail-content text-danger"> <b class="text-black">Tổng tiền: </b> @item.totalPrice VNĐ</h3>
+                </div>
+            </div>
+        }
+
+    </div>
+
+</div>
+

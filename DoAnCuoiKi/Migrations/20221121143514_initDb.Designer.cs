@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DoAnCuoiKi.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20221118094105_initDb")]
+    [Migration("20221121143514_initDb")]
     partial class initDb
     {
         /// <inheritdoc />
@@ -27,14 +27,13 @@ namespace DoAnCuoiKi.Migrations
 
             modelBuilder.Entity("DoAnCuoiKi.Data.Brand", b =>
                 {
-                    b.Property<int>("brandId")
+                    b.Property<int?>("brandId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("brandId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("brandId"));
 
                     b.Property<string>("name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("brandId");
@@ -121,11 +120,11 @@ namespace DoAnCuoiKi.Migrations
 
             modelBuilder.Entity("DoAnCuoiKi.Data.Cart", b =>
                 {
-                    b.Property<int>("cartId")
+                    b.Property<int?>("cartId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("cartId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("cartId"));
 
                     b.Property<int>("amount")
                         .HasColumnType("int");
@@ -156,11 +155,11 @@ namespace DoAnCuoiKi.Migrations
 
             modelBuilder.Entity("DoAnCuoiKi.Data.Category", b =>
                 {
-                    b.Property<int>("categoryId")
+                    b.Property<int?>("categoryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("categoryId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("categoryId"));
 
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
@@ -224,11 +223,11 @@ namespace DoAnCuoiKi.Migrations
 
             modelBuilder.Entity("DoAnCuoiKi.Data.Order", b =>
                 {
-                    b.Property<int>("orderId")
+                    b.Property<int?>("orderId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("orderId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("orderId"));
 
                     b.Property<string>("customerAddress")
                         .HasColumnType("nvarchar(max)");
@@ -243,6 +242,9 @@ namespace DoAnCuoiKi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("dateCreate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("dateReceive")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("otherInformation")
@@ -266,11 +268,11 @@ namespace DoAnCuoiKi.Migrations
 
             modelBuilder.Entity("DoAnCuoiKi.Data.OrderDetails", b =>
                 {
-                    b.Property<int>("orderDetailsId")
+                    b.Property<int?>("orderDetailsId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("orderDetailsId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("orderDetailsId"));
 
                     b.Property<string>("image")
                         .HasColumnType("nvarchar(max)");

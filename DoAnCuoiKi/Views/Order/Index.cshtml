@@ -1,0 +1,73 @@
+﻿@model IEnumerable<DoAnCuoiKi.Data.Order>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="order-container">
+    <h1 class="order-header">Đơn hàng của tôi</h1>
+    @if(Model != null){
+        <div class="list-order">
+            
+            @foreach (var item in Model)
+            {
+                var trangthai = item.status == 0 ? "Chờ vận chuyển" : item.status == 1 ? "Đang giao" : "Đã giao";
+
+                <div class="item-order">
+                    <div class="item-order-1">
+                        <h4 class="item-order-1-price"><b>Người nhận: </b>@item.customerName</h4>
+                        <h4 class="item-order-1-name"><b>Tổng tiền: </b>@item.totalPrice VNĐ</h4>
+                    </div>
+                    <div class="item-order-2">
+                        <h4 class="item-order-1-dateCreate"><b>Ngày đặt hàng: </b>@item.dateCreate</h4>
+                        <h4 class="item-order-1-dateCreate"><b>Ngày nhận hàng: </b>@item.dateReceive</h4>
+                    </div>
+                    <div class="item-order-3">
+                        <h4 class="item-order-2-status text-danger text-center w-100" style="margin:10px 10px 10px 0;">@trangthai</h4>
+                        <a class="order--btn-click-order-item text-center  d-block m-0 w-100" data-id="@item.orderId" href="#">Chi tiết</a>
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
+    else{
+        <h5 style="margin-top:200px; color:#999; text-align:center;">Bạn chưa có đơn hàng nào</h5>
+    }
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(()=>{
+
+
+            //onClick change count
+            (() => {
+                var btnClicks = document.querySelectorAll('.order--btn-click-order-item');
+                btnClicks.forEach(item => {
+                    item.addEventListener('click', onClickOrderItem);
+                });
+            })();
+
+            function onClickOrderItem() {
+                var orderId = this.getAttribute("data-id");
+                
+
+                $.ajax({
+                    url: "/Order/HandleClickOrder",
+                    type: "post",
+                    data: {
+                        orderId: orderId,
+                    },
+                    success: function (data) {
+                        window.location.href = data
+                        //console.log("path: ", data)
+                    }
+                });
+            }
+
+        })
+    </script>
+}
