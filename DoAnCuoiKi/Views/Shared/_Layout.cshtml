@@ -68,7 +68,7 @@
                                 @Context.User.Identity.Name
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
+                                <li><a class="dropdown-item" asp-action="Index" asp-controller="UserInfo">Thông tin cá nhân</a></li>
                                 <li><a class="dropdown-item" asp-action="Index" asp-controller="Order">Đơn hàng</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" asp-controller="Login" asp-action="Logout">Đăng xuất</a></li>

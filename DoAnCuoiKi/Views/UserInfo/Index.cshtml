@@ -1,0 +1,218 @@
+﻿@model DoAnCuoiKi.Data.User
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var role = Model.role == "Admin" ? "Quản lí" : "Khách hàng";
+
+}
+
+<div class="user-info-container">
+    
+    <div class="user-info-left">
+        @if(Model.gender == "Nữ"){
+            <img src="~/Images/female.jpg" />
+        }
+        else{
+            <img src="~/Images/male.png" />
+        }
+        <h3>@role</h3>
+
+        <h4><b>Họ tên: </b>@Model.name</h4>
+        <h4><b>Giới tính: </b>@Model.gender</h4>
+        <h4><b>Email: </b>@Model.email</h4>
+        <h4><b>Số điện thoại: </b>@Model.phone</h4>
+        <h4><b>Địa chỉ: </b>@Model.address</h4>
+
+        <div id="userInfo-btnUpdateInfo" class="btn btn-info">Cập nhật thông tin</div>
+        <div id="userInfo-btnChangePassword" class="btn btn-danger">Đổi mật khẩu</div>
+
+    </div>
+
+    @*<div class="user-info-right">
+        
+        <h4><b>Họ tên: </b>@Model.name</h4>
+        <h4><b>Giới tính: </b>@Model.gender</h4>
+        <h4><b>Email: </b>@Model.email</h4>
+        <h4><b>Số điện thoại: </b>@Model.phone</h4>
+        <h4><b>Địa chỉ: </b>@Model.address</h4>
+
+        <div class="btn btn-danger">Cập nhật thông tin</div>
+        <div class="btn btn-danger">Đổi mật khẩu</div>
+
+    </div>*@
+
+</div>
+
+
+
+
+
+<!-- Modal change pass -->
+<div class="modal fade" id="modalChangePassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center w-100" id="exampleModalLongTitle">Đổi mật khẩu</h5>
+            </div>
+            <div class="modal-body">
+            
+                <div class="mb-3">
+                    <label for="userInfo-inputCurrentPass" class="form-label">Mật khẩu cũ</label>
+                    <input type="password" class="form-control" id="userInfo-inputCurrentPass" placeholder="Mật khẩu cũ">
+                </div>
+                <div class="mb-3">
+                    <label for="userInfo-inputNewPass" class="form-label">Mật khẩu mới</label>
+                    <input type="password" class="form-control" id="userInfo-inputNewPass" placeholder="Mật khẩu mới">
+                </div>
+                <div class="mb-3">
+                    <label for="userInfo-inputConfirmPass" class="form-label">Xác nhận mật khẩu</label>
+                    <input type="password" class="form-control" id="userInfo-inputConfirmPass" placeholder="Xác nhận mật khẩu">
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button id="userInfo-btnCancelChangePassword" type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+                <button id="userInfo-btnConfirmChangePassword" type="button" class="btn btn-primary">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End modal change pass -->
+
+<!-- Modal change info -->
+<div class="modal fade" id="modalChangeInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center w-100" id="exampleModalLongTitle">Cập nhật thông tin</h5>
+            </div>
+            <div class="modal-body">
+
+                <form id="userInfo__form-update-user-info" method="post" asp-action="HanleUpdateUserInfo" asp-controller="UserInfo">
+                    <div class="mb-3">
+                        <label class="form-label">Họ tên</label>
+                        <input class="form-control" placeholder="Họ tên" type="text"  name="name" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label  class="form-label">Giới tính</label>
+                        <select required class="form-select" name="gender" aria-label="Default select example">
+                            <option value="Nữ">Nữ</option>
+                            <option value="Nam">Nam</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Số điện thoại</label>
+                        <input class="form-control" placeholder="Số điện thoại" type="text" name="phone" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input class="form-control" placeholder="Email" type="email" name="email" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Địa chỉ</label>
+                        <input class="form-control" placeholder="Địa chỉ" type="text" name="address" required />
+                    </div>
+
+                </form>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button id="userInfo-btnCancelChangeInfo" type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+                <button id="userInfo-btnConfirmChangeInfo" type="submit" form="userInfo__form-update-user-info" class="btn btn-primary">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End modal change info -->
+
+
+@section Scripts{
+    <script>
+        $(document).ready(()=>{
+
+
+            const defaultValue = () => {
+
+                $("[name='name']").val("@Model.name");
+                $("[name='gender']").val("@Model.gender");
+                $("[name='phone']").val("@Model.phone");
+                $("[name='email']").val("@Model.email");
+                $("[name='address']").val("@Model.address");
+            }
+            defaultValue()
+
+            //handel change passs
+            $("#userInfo-btnChangePassword").click(()=>{
+                $('#modalChangePassword').modal('show')
+            })
+            
+
+            $("#userInfo-btnCancelChangePassword").click(() => {
+                $("#userInfo-inputCurrentPass").val("");
+                $("#userInfo-inputNewPass").val("");
+                $("#userInfo-inputConfirmPass").val("");
+                 
+                $('#modalChangePassword').modal('hide')
+
+            })
+
+            $("#userInfo-btnConfirmChangePassword").click(() => {
+
+                  const currentPass = $("#userInfo-inputCurrentPass").val().trim(); 
+                  const newPass = $("#userInfo-inputNewPass").val().trim(); 
+                  const confirmPass = $("#userInfo-inputConfirmPass").val().trim();
+
+                if (currentPass.length < 6 || newPass.length < 6 || confirmPass.length < 6){
+                    alert("Tối thiểu 6 kí tự")
+                    return
+                }
+
+                if(newPass != confirmPass){
+                    alert("Xác nhận mật khẩu không khớp")
+                    return
+                }
+
+
+                $.ajax({
+                    url: "/UserInfo/HandleChangePassword",
+                    type: "post",
+                    data: {
+                        currentPass: currentPass,
+                        newPass: newPass,
+                    },
+                    success: function (data) {
+                        if(data == false){
+                            alert("Mật khẩu không chính xác");
+                        }
+                        else{
+                            $('#modalChangePassword').modal('hide')
+                            alert("Đổi mật khẩu thành công");
+                        }
+                    }
+                });
+
+            })
+
+            
+           //handle change info
+            $("#userInfo-btnUpdateInfo").click(() => {
+                defaultValue()
+                $('#modalChangeInfo').modal('show')
+            })
+
+            $("#userInfo-btnCancelChangeInfo").click(() => {
+                $('#modalChangeInfo').modal('hide')
+            })
+
+
+        })
+    </script>
+}

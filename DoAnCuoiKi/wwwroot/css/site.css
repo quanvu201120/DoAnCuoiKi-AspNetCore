@@ -357,6 +357,41 @@ body {
 }
 
 /*---OrderDetail------------------------------------------------------------------------------------*/
+/*---User info------------------------------------------------------------------------------------*/
+.user-info-container {
+    background: white;
+    align-items: center;
+    min-height: calc(100vh - 200px);
+    display:flex;
+    align-items:center;
+    gap:20px;
+    justify-content:center;
+}
+
+.user-info-left {
+    width: 50%;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    border-radius:10px;
+    padding:20px;
+}
+/*.user-info-right {
+    width: 60%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    border-radius: 10px;
+}*/
+
+.user-info-left img{
+    width:200px;
+    height:200px;
+    border-radius:50%;
+}
+
+.user-info-left h4{
+    text-align:left;
+    padding-left:20px;
+}
+/*---User info------------------------------------------------------------------------------------*/
 
 
 
