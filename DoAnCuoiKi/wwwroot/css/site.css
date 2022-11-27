@@ -46,12 +46,14 @@ body {
 .wrapper-item-product {
     padding: 5px;
     width: 20%;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .item-product {
-    border-radius:5px;
-    border:1px solid #cecece;
+    border-radius: 5px;
+    border: 1px solid #cecece;
+    background: white;
+    overflow:hidden;
 }
 
 .item-product-img {
@@ -88,6 +90,7 @@ body {
 
 /*---Product detail------------------------------------------------------------------------------------*/
 .product-detail {
+    background-color:white;
     padding: 10px;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
     border-radius:10px;
@@ -139,6 +142,7 @@ body {
     max-height:calc(100vh-150px);
     overflow-y:auto;
     width:65%;
+    background:white;
 }
 .cart-container-right {
     width: 35%;
@@ -359,7 +363,6 @@ body {
 /*---OrderDetail------------------------------------------------------------------------------------*/
 /*---User info------------------------------------------------------------------------------------*/
 .user-info-container {
-    background: white;
     align-items: center;
     min-height: calc(100vh - 200px);
     display:flex;
@@ -372,8 +375,9 @@ body {
     width: 50%;
     text-align: center;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
-    border-radius:10px;
-    padding:20px;
+    border-radius: 10px;
+    padding: 20px;
+    background: white;
 }
 /*.user-info-right {
     width: 60%;
@@ -392,6 +396,54 @@ body {
     padding-left:20px;
 }
 /*---User info------------------------------------------------------------------------------------*/
+/*---Contacts------------------------------------------------------------------------------------*/
+.contacts-container{
+    display:flex;
+    flex-flow:row wrap;
+}
+
+.contacts-wraper{
+    width: calc(50%);
+    padding: 20px;
+
+}
+
+.contacts-info {
+
+}
+.contacts-map{
+
+}
+
+/*---Contacts------------------------------------------------------------------------------------*/
+/*---Payment------------------------------------------------------------------------------------*/
+.payment-container {
+    
+}
+.payment-item {
+    display: flex;
+    margin-top: 30px;
+}
+
+.payment-item-img{
+    width:35%;
+    border-radius:30px;
+    overflow:hidden;
+}
+.payment-item-description{
+    width:65%;
+    padding:20px;
+}
+
+.payment-item-description h2{
+    color:white;
+    text-align:center;
+}
+.payment-item-description h6{
+    line-height:1.8;
+}
+
+/*---Payment------------------------------------------------------------------------------------*/
 
 
 

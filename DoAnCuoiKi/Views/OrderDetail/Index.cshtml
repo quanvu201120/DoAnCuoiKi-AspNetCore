@@ -10,11 +10,12 @@
     <h1 class="orderDetail-header">Chi tiết đơn hàng</h1>
     <div class="orderDetail-box-content">
         <h3 class="orderDetail-box-item"> <b>Khách hàng: </b> @Model.order.customerName </h3>
-        <h3 class="orderDetail-box-item"> <b>Trạng thái đơn hàng: </b> @trangthai </h3>
+        <h3 class="orderDetail-box-item"> <b>Mã đơn hàng: </b> @Model.order.orderId </h3>
+
     </div>
     <div class="orderDetail-box-content">
         <h3 class="orderDetail-box-item"> <b>Địa chỉ nhận hàng: </b> @Model.order.customerAddress </h3>
-        <h3 class="orderDetail-box-item"> <b>Tổng tiền: </b> @Model.order.totalPrice </h3>
+        <h3 class="orderDetail-box-item"> <b>Trạng thái đơn hàng: </b> @trangthai </h3>
     </div>
     <div class="orderDetail-box-content">
         <h3 class="orderDetail-box-item"> <b>Ngày đặt hàng: </b> @Model.order.dateCreate </h3>
@@ -23,6 +24,7 @@
     <div class="orderDetail-box-content">
         <h3 class="orderDetail-box-item"> <b>Số điện thoại: </b> @Model.order.customerPhone </h3>
         <h3 class="orderDetail-box-item"> <b>Tổng thanh toán: </b> @Model.order.totalPrice VNĐ</h3>
+
     </div>
 
     <span class="orderDetail-orderInfo"><b>Thông tin khác:  </b>@Model.order.otherInformation</span>

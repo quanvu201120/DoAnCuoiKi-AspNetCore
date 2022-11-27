@@ -9,6 +9,11 @@
     <div class="col">
         <h5 class="text-info">@Model?.categoryName</h5>
     </div>
+
+    <div class="col" style="display:flex; align-items:center;">
+        <input class="home-input-search form-control w-auto" placeholder="Tìm kiếm" value="@ViewBag.search"/>
+        <div class="btn-search-home btn btn-info ml-2"><i class="fa-solid fa-magnifying-glass"></i></div>
+    </div>
     
     <div class="col" style="display:flex; align-items:center;">
         <span style="white-space:nowrap;">Thương hiệu</span> &nbsp;
@@ -95,6 +100,22 @@
                         categoryid: @Model.categoryId,
                         brandid: brandId,
                         price: priceSelect,
+                    },
+                    success: function (data) {
+                        window.location.href = data;
+                    }
+                });
+            });
+            //search
+            $('.btn-search-home').click( function () {
+
+                const search = $(".home-input-search").val();
+
+                $.ajax({
+                    url: "/home/hanleclickfilter",
+                    type: "post",
+                    data: {
+                        search: search
                     },
                     success: function (data) {
                         window.location.href = data;

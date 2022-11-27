@@ -9,11 +9,13 @@
     <link rel="stylesheet" href="~/DoAnCuoiKi.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
 </head>
-<body>
+<body style="background-image: linear-gradient(to right,#eeebec, #e0cae7);">
     <header >
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DoAnCuoiKi</a>
+        <nav style="background-image: linear-gradient(to right,#cc2b5e, #753a88);" class=" navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 bg-danger">
+            <div class="container-fluid" >
+                <a class="navbar-brand " style="margin-left:100px;" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fa-sharp fa-solid fa-house text-light"></i>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -33,19 +35,19 @@
                     <ul class="nav nav-pills" style="width:100%;padding:0 100px;">
 
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Danh mục sản phẩm</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Danh mục sản phẩm</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Liên hệ</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Contacts" asp-action="Index">Liên hệ</a>
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Thanh toán</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Payment" asp-action="Index">Thanh toán</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Giới thiệu</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="AboutUs" asp-action="Index">Giới thiệu</a>
                         </li>
 
 
@@ -54,16 +56,16 @@
 
                         @if(Context.User.IsInRole("Admin")){
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="Admin" asp-controller="Users" asp-action="Index">Admin</a>
+                                <a class="nav-link text-light" asp-area="Admin" asp-controller="Users" asp-action="Index">Admin</a>
                             </li>
                         }
                         
                         <li class="nav-item" >
-                            <a class="nav-link" asp-area="" asp-controller="Cart" asp-action="Index">Giỏ hàng</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Cart" asp-action="Index">Giỏ hàng</a>
                         </li>
                         
                         <li class="nav-item dropdown" >
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" 
+                            <a class="nav-link dropdown-toggle text-light" data-bs-toggle="dropdown" 
                                 href="#" role="button" aria-expanded="false">
                                 @Context.User.Identity.Name
                             </a>
@@ -88,7 +90,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - DoAnCuoiKi
+            &copy; 2022 - Return Team
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

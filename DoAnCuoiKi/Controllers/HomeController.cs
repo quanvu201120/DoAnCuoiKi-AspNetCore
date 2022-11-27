@@ -22,6 +22,7 @@ namespace DoAnCuoiKi.Controllers
             string categoryId = HttpContext.Request.Query["categoryId"];
             string brandId = HttpContext.Request.Query["brandId"];
             string price = HttpContext.Request.Query["price"];
+            string search = HttpContext.Request.Query["search"];
 
 
             //viewbag content
@@ -29,12 +30,20 @@ namespace DoAnCuoiKi.Controllers
             List<Brand> brands = new List<Brand>();
             var cateName = "";
 
+            ViewBag.search = search;
+
             //Mặc định category 1
             if (categoryId.IsNullOrEmpty())
             {
                 categoryId = "1";
                 cateName = _context.categories.FirstOrDefault(item => item.categoryId == 1).name;
                 products = products.Where(item => item.categoryId == 1).ToList();
+            }
+
+
+            if (!search.IsNullOrEmpty())
+            {
+                products = products.Where(_ => _.name.Contains(search)).ToList();            
             }
 
             //filter theo cate id
@@ -98,9 +107,9 @@ namespace DoAnCuoiKi.Controllers
         //=> sau đó bên ajax success redirect tới đường dẫn
         //=> action index lấy id trên đường dẫn và xử lí
         [HttpPost]
-        public string HanleClickFilter(string categoryId, string? brandId = "", string ? price = "" )
+        public string HanleClickFilter(string categoryId, string? brandId = "", string ? price = "", string ? search = "" )
         {
-            return "/Home/Index?categoryId=" + categoryId + "&brandId=" + brandId + "&price=" + price;
+            return "/Home/Index?categoryId=" + categoryId + "&brandId=" + brandId + "&price=" + price+ "&search=" + search;
         }
 
         //Nhận id từ ajax trả về đường dẫn
