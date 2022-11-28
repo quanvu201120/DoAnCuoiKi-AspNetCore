@@ -19,7 +19,8 @@ namespace DoAnCuoiKi.Migrations
                 {
                     brandId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    isDelete = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -32,7 +33,8 @@ namespace DoAnCuoiKi.Migrations
                 {
                     categoryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    isDelete = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -68,6 +70,7 @@ namespace DoAnCuoiKi.Migrations
                     description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     amount = table.Column<int>(type: "int", nullable: false),
+                    isDelete = table.Column<bool>(type: "bit", nullable: false),
                     price = table.Column<double>(type: "float", nullable: false),
                     brandId = table.Column<int>(type: "int", nullable: false),
                     categoryId = table.Column<int>(type: "int", nullable: false)
@@ -173,41 +176,41 @@ namespace DoAnCuoiKi.Migrations
 
             migrationBuilder.InsertData(
                 table: "Brand",
-                columns: new[] { "brandId", "name" },
+                columns: new[] { "brandId", "isDelete", "name" },
                 values: new object[,]
                 {
-                    { 1, "ASUS" },
-                    { 2, "GIGABYTE" },
-                    { 3, "MSI" },
-                    { 4, "Asrock" },
-                    { 5, "Intel" },
-                    { 6, "Samsung" },
-                    { 7, "Apacer" },
-                    { 8, "Kingston" },
-                    { 9, "Kingmax" },
-                    { 10, "Sony" },
-                    { 11, "JBL" },
-                    { 12, "Sennheiser" },
-                    { 13, "Corsair" },
-                    { 14, "Logitech" },
-                    { 15, "Apple" }
+                    { 1, false, "ASUS" },
+                    { 2, false, "GIGABYTE" },
+                    { 3, false, "MSI" },
+                    { 4, false, "Asrock" },
+                    { 5, false, "Intel" },
+                    { 6, false, "Samsung" },
+                    { 7, false, "Apacer" },
+                    { 8, false, "Kingston" },
+                    { 9, false, "Kingmax" },
+                    { 10, false, "Sony" },
+                    { 11, false, "JBL" },
+                    { 12, false, "Sennheiser" },
+                    { 13, false, "Corsair" },
+                    { 14, false, "Logitech" },
+                    { 15, false, "Apple" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Category",
-                columns: new[] { "categoryId", "name" },
+                columns: new[] { "categoryId", "isDelete", "name" },
                 values: new object[,]
                 {
-                    { 1, "Chuột - bàn phím" },
-                    { 2, "Thiết bị âm thanh" },
-                    { 3, "Linh kiện PC - Laptop" },
-                    { 4, "SSD" },
-                    { 5, "HDD" },
-                    { 6, "Ram máy tính" },
-                    { 7, "Ổ cứng di động" },
-                    { 8, "Ổ cứng SSD di động" },
-                    { 9, "Thẻ nhớ" },
-                    { 10, "USB" }
+                    { 1, false, "Chuột - bàn phím" },
+                    { 2, false, "Thiết bị âm thanh" },
+                    { 3, false, "Linh kiện PC - Laptop" },
+                    { 4, false, "SSD" },
+                    { 5, false, "HDD" },
+                    { 6, false, "Ram máy tính" },
+                    { 7, false, "Ổ cứng di động" },
+                    { 8, false, "Ổ cứng SSD di động" },
+                    { 9, false, "Thẻ nhớ" },
+                    { 10, false, "USB" }
                 });
 
             migrationBuilder.InsertData(

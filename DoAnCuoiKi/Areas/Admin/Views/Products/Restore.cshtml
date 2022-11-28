@@ -1,0 +1,87 @@
+﻿@model IEnumerable<DoAnCuoiKi.Data.Product>
+
+@{
+    ViewData["Title"] = "Restore";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1 class="text-center text-info">Khôi phục sản phẩm đã xóa</h1>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tên sản phẩm
+            </th>
+           
+            <th>
+                Giá (VNĐ)
+            </th>
+
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+             
+                <td>
+                    @Html.DisplayFor(modelItem => item.price)
+                </td>
+                
+                <td>
+                    <div class="btn btn-danger productAdmin-btnRestoreProduct" data-id="@item.productId">Khôi phục</div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(() => {
+
+
+
+            (() => {
+                var btnRestores = document.querySelectorAll('.productAdmin-btnRestoreProduct');
+                btnRestores.forEach(item => {
+                    item.addEventListener('click', restoreProduct);
+                });
+            })();
+
+            function restoreProduct() {
+
+
+                var id = this.getAttribute("data-id");
+                $.ajax({
+                    url: "HandleRestore",
+                    type: "post",
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data == true) {
+                            alert("Khôi phục thành công!")
+                            window.location.reload()
+                        }
+                        else {
+                            alert("Khôi phục thất bại!")
+                        }
+                    }
+                });
+
+            }
+
+
+        })
+    </script>
+}
+

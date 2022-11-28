@@ -1,72 +1,138 @@
-﻿@model IEnumerable<DoAnCuoiKi.Data.Product>
+﻿@model IEnumerable<DoAnCuoiKi.Areas.Admin.Models.ProductAdminModel>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Index</h1>
+<h1 class="text-center text-info">Quản lí sản phẩm</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div class="d-flex gap-3 justify-content-end">
+    <div class="btn btn-info text-light">
+        <a asp-action="Create" style="text-decoration:none; color:white; font-weight:600;">Tạo mới</a>
+    </div>
+
+    <div class="btn btn-warning text-light">
+        <a asp-action="Restore" style="text-decoration:none; color:white; font-weight:600;">Khôi phục</a>
+    </div>
+</div>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.name)
+                Tên sản phẩm
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.description)
+                Số lượng
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.image)
+                Giá (VNĐ)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.amount)
+                Thương hiệu
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.brand)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.category)
-            </th>
-            <th></th>
+            
+            <th>Hành động</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.name)
+            <td >
+                @Html.DisplayFor(modelItem => item.product.name)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.description)
+            <td >
+                @Html.DisplayFor(modelItem => item.product.amount)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.image)
+            <td >
+                @Html.DisplayFor(modelItem => item.product.price)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.amount)
+            <td >
+                @Html.DisplayFor(modelItem => item.brandName)
             </td>
+            
             <td>
-                @Html.DisplayFor(modelItem => item.price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.brand.brandId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.category.categoryId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.productId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.productId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.productId">Delete</a>
+                <a class="btn btn-warning"  asp-action="Edit" asp-route-id="@item.product.productId">Chỉnh sửa</a> &nbsp;&nbsp;&nbsp;
+                <div class="btn btn-danger productAdmin-btnDeleteShowModel" data-id="@item.product.productId">Xóa</div> &nbsp;&nbsp;&nbsp;
+                <a  class="btn btn-info" asp-action="Details" asp-route-id="@item.product.productId">Chi tiết </a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+
+<div class="modal fade" id="modalDeleteProductAdmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center w-100" id="exampleModalLongTitle">Xóa sản phẩm</h5>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button id="productAdmin-btnCancelDelete" type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+                <button id="productAdmin-btnConfirmDelete" type="button" class="btn btn-primary">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(() => {
+
+            
+//handle delete product
+            let idProductDelete = "";
+
+            (() => {
+                var btnDeletes = document.querySelectorAll('.productAdmin-btnDeleteShowModel');
+                btnDeletes.forEach(item => {
+                    item.addEventListener('click', getSelectedIdProductDelete);
+                });
+            })();
+
+            function getSelectedIdProductDelete() {
+
+                $('#modalDeleteProductAdmin').modal('show')
+
+                var id = this.getAttribute("data-id");
+
+                idProductDelete = id
+
+            }
+
+            $("#productAdmin-btnCancelDelete").click(() => {
+                $('#modalDeleteProductAdmin').modal('hide')
+
+                idProductDelete = ""
+                console.log("id => ", idProductDelete)
+
+            })
+
+            $("#productAdmin-btnConfirmDelete").click(() => {
+                $('#modalDeleteProductAdmin').modal('hide')
+
+                $.ajax({
+                    url: "Products/HandleDeleteProductAdmin",
+                    type: "post",
+                    data: {
+                        id: idProductDelete
+                    },
+                    success: function (data) {
+                        if (data == true) {
+                            window.location.reload()
+                        }
+                        else {
+                            alert("Xóa thất bại!")
+                        }
+                    }
+                });
+
+            })
+//end handle delete product
+
+
+        })
+    </script>
+}

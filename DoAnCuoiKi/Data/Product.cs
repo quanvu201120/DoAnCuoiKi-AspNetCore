@@ -17,11 +17,12 @@ namespace DoAnCuoiKi.Data
 
         public int amount { get; set; }
 
+        public Boolean isDelete { get; set; }
+
         public double price { get; set; }
 
         public int brandId { get; set; }
         public int categoryId { get; set; }
-
 
         [ForeignKey("brandId")]
         public Brand? brand { get; set; }

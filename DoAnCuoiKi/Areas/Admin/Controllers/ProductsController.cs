@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DoAnCuoiKi.Data;
 using Microsoft.AspNetCore.Authorization;
+using DoAnCuoiKi.Areas.Admin.Models;
+using Microsoft.IdentityModel.Abstractions;
 
 namespace DoAnCuoiKi.Areas.Admin.Controllers
 {
@@ -24,8 +26,14 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
         // GET: Admin/Products
         public async Task<IActionResult> Index()
         {
-            var myDbContext = _context.products.Include(p => p.brand).Include(p => p.category);
-            return View(await myDbContext.ToListAsync());
+
+            var data = await _context.products
+                .Where(item => item.isDelete == false)
+                .Join(_context.brands, p => p.brandId, b => b.brandId, (p, b) => new { product = p, brandName = b.name })
+                .Join(_context.categories, p => p.product.categoryId, c => c.categoryId, (p, c) => new ProductAdminModel { product = p.product, brandName = p.brandName, categoryName = c.name })
+                .ToListAsync();
+            
+            return View(data);
         }
 
         // GET: Admin/Products/Details/5
@@ -45,15 +53,24 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
                 return NotFound();
             }
 
+            var brand = await _context.brands.FirstOrDefaultAsync(item => item.brandId == product.brandId);
+            var categoriy = await _context.categories.FirstOrDefaultAsync(item => item.categoryId == product.categoryId);
+
+            ViewBag.brand = brand.name;
+            ViewBag.categoriy = categoriy.name;
+
             return View(product);
         }
 
         // GET: Admin/Products/Create
         public IActionResult Create()
         {
-            ViewData["brandId"] = new SelectList(_context.brands, "brandId", "brandId");
-            ViewData["categoryId"] = new SelectList(_context.categories, "categoryId", "categoryId");
-            return View();
+            var brands = _context.brands.ToList();
+            var categories = _context.categories.ToList();
+
+            var data = new ProductCreateDataModel { brand = brands, category = categories };
+
+            return View(data);
         }
 
         // POST: Admin/Products/Create
@@ -61,17 +78,35 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("productId,name,description,image,amount,price,brandId,categoryId")] Product product)
+        public async Task<IActionResult> Create(string name, string description, IFormFile image, int amount, int price, int brandId, int categoryId)
         {
-            if (ModelState.IsValid)
+            string[] fileName = image.FileName.Split('.');
+            var type = fileName[1];
+            var imageName = Guid.NewGuid() + "." + type;
+
+            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), "ProductImage", imageName);
+
+
+            using (var myFile = new FileStream(fullPath, FileMode.Create))
             {
-                _context.Add(product);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                image.CopyToAsync(myFile);
             }
-            ViewData["brandId"] = new SelectList(_context.brands, "brandId", "brandId", product.brandId);
-            ViewData["categoryId"] = new SelectList(_context.categories, "categoryId", "categoryId", product.categoryId);
-            return View(product);
+
+            var product = new Product
+            {
+                name = name,
+                description = description,
+                amount = amount,
+                image = imageName,
+                price = price,
+                brandId = brandId,
+                categoryId = categoryId,
+            };
+
+            _context.products.Add(product);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
         }
 
         // GET: Admin/Products/Edit/5
@@ -87,9 +122,18 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["brandId"] = new SelectList(_context.brands, "brandId", "brandId", product.brandId);
-            ViewData["categoryId"] = new SelectList(_context.categories, "categoryId", "categoryId", product.categoryId);
-            return View(product);
+
+            var brands = _context.brands.ToList();
+            var categories = _context.categories.ToList();
+
+            var data = new ProductEditDataModel
+            {
+                product = product,
+                brands = brands,
+                categories = categories,
+            };
+
+            return View(data);
         }
 
         // POST: Admin/Products/Edit/5
@@ -97,80 +141,102 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("productId,name,description,image,amount,price,brandId,categoryId")] Product product)
+        public async Task<IActionResult> Edit(int id, string name, string description, IFormFile ? image, int amount, int price, int brandId, int categoryId)
         {
-            if (id != product.productId)
-            {
-                return NotFound();
-            }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(product);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProductExists(product.productId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["brandId"] = new SelectList(_context.brands, "brandId", "brandId", product.brandId);
-            ViewData["categoryId"] = new SelectList(_context.categories, "categoryId", "categoryId", product.categoryId);
-            return View(product);
-        }
-
-        // GET: Admin/Products/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.products == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _context.products
-                .Include(p => p.brand)
-                .Include(p => p.category)
-                .FirstOrDefaultAsync(m => m.productId == id);
+            var product = await _context.products.FirstOrDefaultAsync(item => item.productId == id);
+                
             if (product == null)
             {
-                return NotFound();
+                return View();
+            }
+                
+            if(image != null)
+            {
+
+                var path_of_image_pre = Path.Combine(Directory.GetCurrentDirectory(), "ProductImage", product.image);
+                System.IO.File.Delete(path_of_image_pre);
+
+
+
+                string[] fileName = image.FileName.Split('.');
+                var type = fileName[1];
+                var newImageName = Guid.NewGuid() + "." + type;
+
+                var fullPathNewImage = Path.Combine(Directory.GetCurrentDirectory(), "ProductImage", newImageName);
+
+                using (var myFile = new FileStream(fullPathNewImage, FileMode.Create))
+                {
+                    image.CopyToAsync(myFile);
+                }
+
+                product.image = newImageName;
             }
 
-            return View(product);
+
+            product.name = name;
+            product.description = description;
+            product.amount = amount;
+            product.price = price;
+            product.brandId = brandId;
+            product.categoryId = categoryId;
+
+            _context.products.Update(product);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("index");
         }
 
-        // POST: Admin/Products/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int? id)
+        [HttpPost]
+        public async Task<Boolean> HandleDeleteProductAdmin(int id)
         {
-            if (_context.products == null)
+
+            var product = await _context.products.FirstOrDefaultAsync(item => item.productId == id);
+
+            if(product == null)
             {
-                return Problem("Entity set 'MyDbContext.products'  is null.");
+                return false;
             }
-            var product = await _context.products.FindAsync(id);
-            if (product != null)
-            {
-                _context.products.Remove(product);
-            }
-            
+
+            product.isDelete = true;
+            _context.products.Update(product);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return true;
         }
 
         private bool ProductExists(int? id)
         {
           return _context.products.Any(e => e.productId == id);
         }
+
+
+        public async Task<IActionResult> Restore()
+        {
+            var products = await _context.products.Where(item => item.isDelete == true).ToListAsync();
+
+            return View(products);
+        }
+        [HttpPost]
+        public async Task<Boolean> HandleRestore(int id)
+        {
+            if(id == null)
+            {
+                return false;
+            }
+
+            var product = await _context.products.FirstOrDefaultAsync(item => item.productId == id);
+
+            if(product == null) { return false; }
+
+            product.isDelete = false;
+
+            _context.products.Update(product);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+
     }
 }

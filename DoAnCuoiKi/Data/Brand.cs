@@ -10,5 +10,7 @@ namespace DoAnCuoiKi.Data
         public int? brandId { get; set; }
 
         public string? name { get; set; }
+
+        public Boolean isDelete { get; set; }
     }
 }

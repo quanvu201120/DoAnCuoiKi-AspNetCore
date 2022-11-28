@@ -9,6 +9,7 @@ namespace DoAnCuoiKi.Data
         [Key]
         public int? categoryId { get; set; }
         public string ? name { get; set; }
+        public Boolean? isDelete { get; set; }
 
     }
 }

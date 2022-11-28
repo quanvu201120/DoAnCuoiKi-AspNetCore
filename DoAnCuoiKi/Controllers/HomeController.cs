@@ -26,7 +26,7 @@ namespace DoAnCuoiKi.Controllers
 
 
             //viewbag content
-            var products = _context.products.ToList();
+            var products = _context.products.Where(item => item.isDelete == false).ToList();
             List<Brand> brands = new List<Brand>();
             var cateName = "";
 

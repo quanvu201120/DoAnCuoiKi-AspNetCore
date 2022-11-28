@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DoAnCuoiKi.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20221121143514_initDb")]
+    [Migration("20221128061929_initDb")]
     partial class initDb
     {
         /// <inheritdoc />
@@ -33,6 +33,9 @@ namespace DoAnCuoiKi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("brandId"));
 
+                    b.Property<bool>("isDelete")
+                        .HasColumnType("bit");
+
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
 
@@ -44,76 +47,91 @@ namespace DoAnCuoiKi.Migrations
                         new
                         {
                             brandId = 1,
+                            isDelete = false,
                             name = "ASUS"
                         },
                         new
                         {
                             brandId = 2,
+                            isDelete = false,
                             name = "GIGABYTE"
                         },
                         new
                         {
                             brandId = 3,
+                            isDelete = false,
                             name = "MSI"
                         },
                         new
                         {
                             brandId = 4,
+                            isDelete = false,
                             name = "Asrock"
                         },
                         new
                         {
                             brandId = 5,
+                            isDelete = false,
                             name = "Intel"
                         },
                         new
                         {
                             brandId = 6,
+                            isDelete = false,
                             name = "Samsung"
                         },
                         new
                         {
                             brandId = 7,
+                            isDelete = false,
                             name = "Apacer"
                         },
                         new
                         {
                             brandId = 8,
+                            isDelete = false,
                             name = "Kingston"
                         },
                         new
                         {
                             brandId = 9,
+                            isDelete = false,
                             name = "Kingmax"
                         },
                         new
                         {
                             brandId = 10,
+                            isDelete = false,
                             name = "Sony"
                         },
                         new
                         {
                             brandId = 11,
+                            isDelete = false,
                             name = "JBL"
                         },
                         new
                         {
                             brandId = 12,
+                            isDelete = false,
                             name = "Sennheiser"
                         },
                         new
                         {
                             brandId = 13,
+                            isDelete = false,
                             name = "Corsair"
                         },
                         new
                         {
                             brandId = 14,
+                            isDelete = false,
                             name = "Logitech"
                         },
                         new
                         {
                             brandId = 15,
+                            isDelete = false,
                             name = "Apple"
                         });
                 });
@@ -161,6 +179,9 @@ namespace DoAnCuoiKi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("categoryId"));
 
+                    b.Property<bool?>("isDelete")
+                        .HasColumnType("bit");
+
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
 
@@ -172,51 +193,61 @@ namespace DoAnCuoiKi.Migrations
                         new
                         {
                             categoryId = 1,
+                            isDelete = false,
                             name = "Chuột - bàn phím"
                         },
                         new
                         {
                             categoryId = 2,
+                            isDelete = false,
                             name = "Thiết bị âm thanh"
                         },
                         new
                         {
                             categoryId = 3,
+                            isDelete = false,
                             name = "Linh kiện PC - Laptop"
                         },
                         new
                         {
                             categoryId = 4,
+                            isDelete = false,
                             name = "SSD"
                         },
                         new
                         {
                             categoryId = 5,
+                            isDelete = false,
                             name = "HDD"
                         },
                         new
                         {
                             categoryId = 6,
+                            isDelete = false,
                             name = "Ram máy tính"
                         },
                         new
                         {
                             categoryId = 7,
+                            isDelete = false,
                             name = "Ổ cứng di động"
                         },
                         new
                         {
                             categoryId = 8,
+                            isDelete = false,
                             name = "Ổ cứng SSD di động"
                         },
                         new
                         {
                             categoryId = 9,
+                            isDelete = false,
                             name = "Thẻ nhớ"
                         },
                         new
                         {
                             categoryId = 10,
+                            isDelete = false,
                             name = "USB"
                         });
                 });
@@ -321,6 +352,9 @@ namespace DoAnCuoiKi.Migrations
 
                     b.Property<string>("image")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isDelete")
+                        .HasColumnType("bit");
 
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");

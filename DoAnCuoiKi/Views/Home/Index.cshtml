@@ -48,7 +48,9 @@
             <div class="wrapper-item-product">
                 <div class="item-product" data-productId="@item.productId">
                     @*<div class="item-product-img" style="background-image: url(images/imageTest.png);"></div>*@
-                    <img class="item-product-img" src="~/Images/imageTest.png" alt="photo"/>
+                    <div style="height:200px;">
+                        <img class="item-product-img" src="~/ProductImage/@item.image" alt="Hình ảnh" height="200" />
+                    </div>
                     <span class="item-product-name">@item.name</span>
                     <span class="item-product-price">@item.price VNĐ </span>
                 </div>

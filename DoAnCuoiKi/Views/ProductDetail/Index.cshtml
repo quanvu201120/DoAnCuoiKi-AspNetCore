@@ -11,17 +11,17 @@
 
 <div class="row product-detail">
 
-    <div class="col-6 ">
-        <img src="~/Images//imageTest.png" width="100%" height="100%" alt="photo" style="border-radius:10px;" />
+    <div class="col-6" style="min-height:400px;">
+        <img src="~/ProductImage/@Model.image" width="100%" height="100%" alt="Hình ảnh" style="border-radius:10px;" />
     </div>
 
     <div class="col-6 ">
-        <h4 class="product-detail-name">@Model.name@Model.name@Model.name</h4>
+        <h4 class="product-detail-name">@Model.name</h4>
         <hr/>
         <h6><b class="product-detail-text-title">Thương hiệu: </b>@Model.brandId</h6>
         <h6><b class="product-detail-text-title">Giá bán: </b>@Model.price VNĐ</h6>
         <h6><b class="product-detail-text-title">Số lượng: </b>@Model.amount</h6>
-        <h6 class="product-detail-text-maxheight"><b class="product-detail-text-title">Mô tả sản phẩm: </b>@Model.description VNĐ</h6>
+        <h6 class="product-detail-text-maxheight"><b class="product-detail-text-title">Mô tả sản phẩm: </b>@Model.description </h6>
         <div style="display:flex; justify-content:center; margin-top:10px;">
             <input id="product-detail-input-count" class="form-control" type="number" min="1" value="1" style="width:20%; margin-right:10px;"/>
             <div class="btn btn-info btn-add-product-cart">

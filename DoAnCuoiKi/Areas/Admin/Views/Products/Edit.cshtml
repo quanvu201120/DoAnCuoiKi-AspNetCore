@@ -1,62 +1,76 @@
-﻿@model DoAnCuoiKi.Data.Product
+﻿@model DoAnCuoiKi.Areas.Admin.Models.ProductEditDataModel
 
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Edit</h1>
+<h1 class="text-center text-light">Cập nhật sản phẩm</h1>
 
-<h4>Product</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="productId" />
+    <div class="col-md-4" style="margin: 0  auto;">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div class="form-group">
-                <label asp-for="name" class="control-label"></label>
-                <input asp-for="name" class="form-control" />
-                <span asp-validation-for="name" class="text-danger"></span>
+                <label class="control-label">Mã sản phẩm</label>
+                <input name="id" class="form-control" readonly value="@Model.product.productId"/>
             </div>
             <div class="form-group">
-                <label asp-for="description" class="control-label"></label>
-                <input asp-for="description" class="form-control" />
-                <span asp-validation-for="description" class="text-danger"></span>
+                <label class="control-label">Tên sản phẩm</label>
+                <input name="name" class="form-control" required value="@Model.product.name"/>
             </div>
             <div class="form-group">
-                <label asp-for="image" class="control-label"></label>
-                <input asp-for="image" class="form-control" />
-                <span asp-validation-for="image" class="text-danger"></span>
+                <label class="control-label">Mô tả</label>
+                <input name="description" class="form-control" required value="@Model.product.description"/>
             </div>
             <div class="form-group">
-                <label asp-for="amount" class="control-label"></label>
-                <input asp-for="amount" class="form-control" />
-                <span asp-validation-for="amount" class="text-danger"></span>
+                <label class="control-label">Hình ảnh</label>
+                <input name="image" type="file" class="form-control"/>
             </div>
             <div class="form-group">
-                <label asp-for="price" class="control-label"></label>
-                <input asp-for="price" class="form-control" />
-                <span asp-validation-for="price" class="text-danger"></span>
+                <label class="control-label">Số lượng</label>
+                <input name="amount" type="number" class="form-control" required value="@Model.product.amount"/>
             </div>
             <div class="form-group">
-                <label asp-for="brandId" class="control-label"></label>
-                <select asp-for="brandId" class="form-control" asp-items="ViewBag.brandId"></select>
-                <span asp-validation-for="brandId" class="text-danger"></span>
+                <label class="control-label">Giá</label>
+                <input name="price" type="number" class="form-control" required value="@Model.product.price"/>
             </div>
             <div class="form-group">
-                <label asp-for="categoryId" class="control-label"></label>
-                <select asp-for="categoryId" class="form-control" asp-items="ViewBag.categoryId"></select>
-                <span asp-validation-for="categoryId" class="text-danger"></span>
+                <label class="control-label">Thương hiệu</label>
+                <select name="brandId" class="form-control">
+                    @foreach (var item in Model.brands)
+                    {
+                        <option value="@item.brandId">@item.name</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label class="control-label">Danh mục</label>
+                <select name="categoryId" class="form-control">
+                    @foreach (var item in Model.categories)
+                    {
+                        <option value="@item.categoryId">@item.name</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group text-center d-flex justify-content-evenly mt-3">
+                <div class="btn btn-warning">
+                    <a style="text-decoration:none; color:white;" asp-action="Index">Quay lại</a>
+                </div>
+                <input type="submit" value="Xác nhận" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
+
+@section Scripts{
+    <script>
+        $(document).ready(() => {
+            $("[name='brandId']").val("@Model.product.brandId");
+            $("[name='categoryId']").val("@Model.product.categoryId");
+        })
+    </script>
+}

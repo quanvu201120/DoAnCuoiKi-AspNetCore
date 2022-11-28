@@ -10,11 +10,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 
 </head>
-<body>
+<body style="background-image: linear-gradient(to right,#eeebec, #e0cae7);">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav style="background-image: linear-gradient(to right,#cc2b5e, #753a88);" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Admin ne</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="margin:0 100px;">
+                    <i class="fa-sharp fa-solid fa-house text-light"></i>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -22,19 +24,19 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a>
+                            <a class="nav-link text-light" asp-area="Admin" asp-controller="Users" asp-action="Index">Tài khoản</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Categories" asp-action="Index">Categories</a>
+                            <a class="nav-link text-light" asp-area="Admin" asp-controller="Categories" asp-action="Index">Danh mục</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Orders" asp-action="Index">Orders</a>
+                            <a class="nav-link text-light" asp-area="Admin" asp-controller="Orders" asp-action="Index">Đơn hàng</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Brands" asp-action="Index">Brands</a>
+                            <a class="nav-link text-light" asp-area="Admin" asp-controller="Brands" asp-action="Index">Thương hiệu</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Products" asp-action="Index">Products</a>
+                            <a class="nav-link text-light" asp-area="Admin" asp-controller="Products" asp-action="Index">Sản phẩm</a>
                         </li>
                         
                     </ul>
