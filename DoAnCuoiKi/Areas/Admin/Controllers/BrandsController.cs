@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DoAnCuoiKi.Data;
 using Microsoft.AspNetCore.Authorization;
+using DoAnCuoiKi.Areas.Admin.Models;
+using Microsoft.IdentityModel.Abstractions;
 
 namespace DoAnCuoiKi.Areas.Admin.Controllers
 {
@@ -24,7 +26,10 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
         // GET: Admin/Brands
         public async Task<IActionResult> Index()
         {
-              return View(await _context.brands.ToListAsync());
+            var data = await _context.brands
+                .Where(item => item.isDelete == false)
+                .ToListAsync();
+            return View(data);
         }
 
         // GET: Admin/Brands/Details/5
@@ -88,39 +93,24 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("brandId,name")] Brand brand)
+        public async Task<IActionResult> Edit(int id, string name)
         {
-            if (id != brand.brandId)
+            var brand = await _context.brands.FirstOrDefaultAsync(item => item.brandId == id);
+            if (brand == null)
             {
-                return NotFound();
+                return View();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(brand);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!BrandExists((int)brand.brandId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(brand);
+            brand.name = name;
+            _context.brands.Update(brand);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("index");
         }
 
         // GET: Admin/Brands/Delete/5
         public async Task<IActionResult> Delete(int? id)
-        {
+        { 
             if (id == null || _context.brands == null)
             {
                 return NotFound();
@@ -137,6 +127,8 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
         }
 
         // POST: Admin/Brands/Delete/5
+
+        /*
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -154,10 +146,55 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        */
+
+        [HttpPost]
+        public async Task<Boolean> HandleDeleteBrandAdmin(int id)
+        {
+
+            var brand = await _context.brands.FirstOrDefaultAsync(item => item.brandId == id);
+
+            if (brand == null)
+            {
+                return false;
+            }
+
+            brand.isDelete = true;
+            _context.brands.Update(brand);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
 
         private bool BrandExists(int id)
         {
           return _context.brands.Any(e => e.brandId == id);
+        }
+
+        public async Task<IActionResult> Restore()
+        {
+            var brands = await _context.brands.Where(item => item.isDelete == true).ToListAsync();
+
+            return View(brands);
+        }
+        [HttpPost]
+        public async Task<Boolean> HandleRestore(int id)
+        {
+            if (id == null)
+            {
+                return false;
+            }
+
+            var brand = await _context.brands.FirstOrDefaultAsync(item => item.brandId == id);
+
+            if (brand == null) { return false; }
+
+            brand.isDelete = false;
+
+            _context.brands.Update(brand);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }
