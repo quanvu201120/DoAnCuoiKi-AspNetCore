@@ -227,10 +227,18 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
 
             var product = await _context.products.FirstOrDefaultAsync(item => item.productId == id);
 
+
+
+
             if(product == null) { return false; }
 
-            product.isDelete = false;
 
+
+            var carts = await _context.carts.Where(item => item.productId == product.productId).ToListAsync();
+            _context.carts.RemoveRange(carts);
+            await _context.SaveChangesAsync();
+
+            product.isDelete = false;
             _context.products.Update(product);
             await _context.SaveChangesAsync();
 
