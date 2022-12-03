@@ -5,19 +5,23 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Index</h1>
+<h1 class="text-center text-info">Quản lí Thương hiệu</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div class="d-flex gap-3 justify-content-end">
+    <div class="btn btn-info text-light">
+        <a asp-action="Create" style="text-decoration:none; color:white; font-weight:600;">Tạo mới</a>
+    </div>
+
+    <div class="btn btn-warning text-light">
+        <a asp-action="Restore" style="text-decoration:none; color:white; font-weight:600;">Khôi phục</a>
+    </div>
+</div>
+
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.name)
-            </th>
-            <th></th>
-        </tr>
+            <th>Tên thương hiệu</th>
+            <th>Hành động</th>
     </thead>
     <tbody>
 @foreach (var item in Model) {
@@ -26,11 +30,80 @@
                 @Html.DisplayFor(modelItem => item.name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.brandId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.brandId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.brandId">Delete</a>
+                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.brandId">Chỉnh sửa</a> &nbsp;&nbsp;&nbsp;
+                <div class="btn btn-danger brandAdmin-btnDeleteShowModel" data-id="@item.brandId">Xóa</div> &nbsp;&nbsp;&nbsp;
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<div class="modal fade" id="modalDeleteBrandAdmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center w-100" id="exampleModalLongTitle">Xóa thương hiệu</h5>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button id="brandAdmin-btnCancelDelete" type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+                <button id="brandAdmin-btnConfirmDelete" type="button" class="btn btn-primary">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(() => {
+        //handle delete brand
+            let idBrandDelete = "";
+
+            (() => {
+                var btnDeletes = document.querySelectorAll('.brandAdmin-btnDeleteShowModel');
+                btnDeletes.forEach(item => {
+                    item.addEventListener('click', getSelectedIdBrandDelete);
+                });
+            })();
+
+            function getSelectedIdBrandDelete() {
+
+                $('#modalDeleteBrandAdmin').modal('show')
+
+                var id = this.getAttribute("data-id");
+
+                idBrandDelete = id
+
+            }
+
+            $("#brandAdmin-btnCancelDelete").click(() => {
+                $('#modalDeleteBrandAdmin').modal('hide')
+
+                idBrandDelete = ""
+                console.log("id => ", idBrandDelete)
+
+            })
+
+            $("#brandAdmin-btnConfirmDelete").click(() => {
+                $('#modalDeleteBrandAdmin').modal('hide')
+
+                $.ajax({
+                    url: "Brands/HandleDeleteBrandAdmin",
+                    type: "post",
+                    data: {
+                        id: idBrandDelete
+                    },
+                    success: function (data) {
+                        if (data == true) {
+                            window.location.reload()
+                        }
+                        else {
+                            alert("Xóa thất bại!")
+                        }
+                    }
+                });
+
+            })
+        //end handle delete brand
+        })
+    </script>
+}
