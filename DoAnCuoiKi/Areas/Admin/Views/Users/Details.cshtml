@@ -5,50 +5,43 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Details</h1>
+<h1 style="text-align:center">Chi tiết tài khoản</h1>
 
-<div>
-    <h4>User</h4>
+<div style="margin:0 auto">
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.name)
+            Họ tên
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.phone)
+            Số điện thoại
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.phone)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.email)
+            Email
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.email)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.gender)
+            Giới tính
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.gender)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.password)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.password)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.address)
+            Địa chỉ
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.address)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.role)
+            Chức vụ
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.role)
@@ -56,6 +49,5 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.userId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-info" asp-action="Index">Quay lại</a>
 </div>

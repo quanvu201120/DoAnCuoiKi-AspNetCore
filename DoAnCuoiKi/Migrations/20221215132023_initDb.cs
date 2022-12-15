@@ -53,7 +53,8 @@ namespace DoAnCuoiKi.Migrations
                     gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    role = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    role = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    isDelete = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -215,8 +216,8 @@ namespace DoAnCuoiKi.Migrations
 
             migrationBuilder.InsertData(
                 table: "User",
-                columns: new[] { "userId", "address", "email", "gender", "name", "password", "phone", "role" },
-                values: new object[] { 1, "VN", "admin@gmail.com", "Nam", "admin", "123123", "0338786222", "Admin" });
+                columns: new[] { "userId", "address", "email", "gender", "isDelete", "name", "password", "phone", "role" },
+                values: new object[] { 1, "VN", "admin@gmail.com", "Nam", false, "admin", "123123", "0338786222", "Admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cart_productId",

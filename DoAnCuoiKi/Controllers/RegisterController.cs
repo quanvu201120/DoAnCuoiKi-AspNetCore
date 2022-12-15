@@ -27,6 +27,7 @@ namespace DoAnCuoiKi.Controllers
         public async Task<IActionResult> Index([Bind("userId,name,phone,email,gender,password,address")] User user)
         {
             user.role = "Customer";
+            user.isDelete = false;
             var check = context.users.SingleOrDefault(item => item.email.ToUpper() == user.email.ToUpper());
 
             if (ModelState.IsValid && check == null)

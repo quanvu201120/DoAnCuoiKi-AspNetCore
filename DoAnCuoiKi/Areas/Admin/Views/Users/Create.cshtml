@@ -1,61 +1,72 @@
-﻿@model DoAnCuoiKi.Data.User
-
+﻿@model DoAnCuoiKi.Data.User;
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Create</h1>
+<h1 class="text-center text-light">Tạo tài khoản</h1>
 
-<h4>User</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="col-md-4" style="margin: 0  auto;">
+        <form asp-action="Create" >
             <div class="form-group">
-                <label asp-for="name" class="control-label"></label>
-                <input asp-for="name" class="form-control" />
-                <span asp-validation-for="name" class="text-danger"></span>
+                <label class="control-label">Họ tên</label>
+                <input name="name" class="form-control" required value="@Model?.name"/>
             </div>
             <div class="form-group">
-                <label asp-for="phone" class="control-label"></label>
-                <input asp-for="phone" class="form-control" />
-                <span asp-validation-for="phone" class="text-danger"></span>
+                <label class="control-label">Số điện thoại</label>
+                <input name="phone" type="number" class="form-control" required value="@Model?.phone" />
+            </div>
+             <div class="form-group">
+                <label class="control-label">Email</label>
+                <input name="email" type="email" class="form-control" required />
+            </div>
+             <div class="form-group">
+                <label class="control-label">Giới tính</label>
+                <select class ="form-select" name="gender">
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                </select>
+            </div>
+             <div class="form-group">
+                <label class="control-label">Mật khẩu</label>
+                <input name="password" type="password" class="form-control" required value="@Model?.password" />
             </div>
             <div class="form-group">
-                <label asp-for="email" class="control-label"></label>
-                <input asp-for="email" class="form-control" />
-                <span asp-validation-for="email" class="text-danger"></span>
+                <label class="control-label">Địa chỉ</label>
+                <input name="address" class="form-control" required value="@Model?.address" />
             </div>
             <div class="form-group">
-                <label asp-for="gender" class="control-label"></label>
-                <input asp-for="gender" class="form-control" />
-                <span asp-validation-for="gender" class="text-danger"></span>
+                <label class="control-label">Chức vụ</label>
+                <select class="form-select" name="role">
+                    <option value="Customer">Customer</option>
+                    <option value="Admin">Admin</option>
+                </select>
             </div>
-            <div class="form-group">
-                <label asp-for="password" class="control-label"></label>
-                <input asp-for="password" class="form-control" />
-                <span asp-validation-for="password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="address" class="control-label"></label>
-                <input asp-for="address" class="form-control" />
-                <span asp-validation-for="address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="role" class="control-label"></label>
-                <input asp-for="role" class="form-control" />
-                <span asp-validation-for="role" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            
+
+            <div class="form-group text-center d-flex justify-content-evenly mt-3">
+                <div class="btn btn-warning">
+                    <a style="text-decoration:none; color:white;" asp-action="Index">Quay lại</a>
+                </div>
+                <input type="submit" value="Xác nhận" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
+
+@section Scripts{
+    <script>
+        $(document).ready(() => {
+            $("[name='gender']").val("@Model?.gender");
+            $("[name='role']").val("@Model?.role");
+        })
+
+        if(@Model?.name?.Length > 0){
+            alert("Email đã tồn tại!")
+        }
+    </script>
+}

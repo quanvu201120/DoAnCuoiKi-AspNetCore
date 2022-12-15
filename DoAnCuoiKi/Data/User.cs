@@ -23,5 +23,8 @@ namespace DoAnCuoiKi.Data
 
         public string? role { get; set; }
 
+        public Boolean isDelete { get; set; }
+
+
     }
 }

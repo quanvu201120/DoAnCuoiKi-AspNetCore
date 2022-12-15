@@ -1,0 +1,143 @@
+﻿@model DoAnCuoiKi.Models.OrderDetailModelcs
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var trangthai = Model?.order?.status == 0 ? "Chờ vận chuyển" : Model?.order?.status == 1 ? "Đang giao" : "Đã giao";
+}
+
+
+<div class="order-detail-container">
+    <h1 class="orderDetail-header">Chi tiết đơn hàng</h1>
+
+    @if(Model.order.status != 2){
+        <div class="orderDetail-box-content w-100">
+            <button class="btn btn-info" id="detailOrderAdmin-updateStatus">Cập nhật</button>
+        </div>
+    }
+    <div class="orderDetail-box-content">
+        <h3 class="orderDetail-box-item"> <b>Khách hàng: </b> @Model.order.customerName </h3>
+        <h3 class="orderDetail-box-item"> <b>Mã đơn hàng: </b> @Model.order.orderId </h3>
+
+    </div>
+    <div class="orderDetail-box-content">
+        <h3 class="orderDetail-box-item"> <b>Địa chỉ nhận hàng: </b> @Model.order.customerAddress </h3>
+        <h3 class="orderDetail-box-item"> <b>Trạng thái đơn hàng: </b> @trangthai </h3>
+    </div>
+    <div class="orderDetail-box-content">
+        <h3 class="orderDetail-box-item"> <b>Ngày đặt hàng: </b> @Model.order.dateCreate </h3>
+        <h3 class="orderDetail-box-item"> <b>Ngày nhận hàng: </b> @Model.order.dateReceive </h3>
+    </div>
+    <div class="orderDetail-box-content">
+        <h3 class="orderDetail-box-item"> <b>Số điện thoại: </b> @Model.order.customerPhone </h3>
+        <h3 class="orderDetail-box-item"> <b>Tổng thanh toán: </b> @Model.order.totalPrice VNĐ</h3>
+
+    </div>
+
+    <span class="orderDetail-orderInfo"><b>Thông tin khác:  </b>@Model.order.otherInformation</span>
+
+    <hr/>
+    <h6 class="text-center text-info mt-0">Danh sách sản phẩm</h6>
+
+    <div class="orderDetail-listDetail">
+
+        @foreach (var item in Model.orderDetails)
+        {
+            <div class="orderDetail-itemDetail">
+                <div class="orderDetail-itemDetail-img">
+                    <img src="~/ProductImage/@item.image" alt="photo" />
+                </div>
+
+                <div class="orderDetail-itemDetail-1">
+                    <h3 class="orderDetail-itemDetail-content"> <b>Tên sản phẩm: </b> @item.productName </h3>
+                    <h3 class="orderDetail-itemDetail-content text-info"> <b class="text-black">Giá: </b> @item.productPrice VNĐ</h3>
+                </div>
+                <div class="orderDetail-itemDetail-2">
+                    <h3 class="orderDetail-itemDetail-content"> <b>Số lượng: </b> @item.productAmout</h3>
+                    <h3 class="orderDetail-itemDetail-content text-danger"> <b class="text-black">Tổng tiền: </b> @item.totalPrice VNĐ</h3>
+                </div>
+            </div>
+        }
+
+    </div>
+
+</div>
+
+
+<!-- Modal change status -->
+<div class="modal fade" id="modalChangeStatusOrderDetailsAdmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center w-100" id="exampleModalLongTitle">Cập nhật đơn hàng</h5>
+            </div>
+            <div class="modal-body">
+
+                <div class="mb-3">
+                    <label for="userInfo-inputCurrentPass" class="form-label">Trạng thái</label>
+                    <select name="status" class="form-control">
+                        <option value="0">Chờ vận chuyển</option>
+                        <option value="1">Đang giao</option>
+                        <option value="2">Đã giao</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button id="btnCancelChangeStatusOrderAdmin" type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+                <button id="btnConfirmChangeStatusOrderAdmin" type="button" class="btn btn-primary">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End modal change status -->
+
+
+@section Scripts{
+    <script>
+        $(document).ready(() => {
+
+            $("[name='status']").val("@Model.order.status");
+
+            //handel change status
+            $("#detailOrderAdmin-updateStatus").click(() => {
+                $('#modalChangeStatusOrderDetailsAdmin').modal('show')
+            })
+
+            $("#btnCancelChangeStatusOrderAdmin").click(() => {
+                $('#modalChangeStatusOrderDetailsAdmin').modal('hide')
+            })
+
+
+            $("#btnConfirmChangeStatusOrderAdmin").click(() => {
+
+                const status = $("[name='status']").val()
+
+               if(status == @Model.order.status){return}
+
+                $.ajax({
+                    url: "UpdateStatusOrder",
+                    type: "post",
+                    data: {
+                        orderId: @Model.order.orderId,
+                        status: status
+                    },
+                    success: function (data) {
+                        if(data == true){
+                           window.location.reload()
+                        }
+                        else{
+                            $('#modalChangeStatusOrderDetailsAdmin').modal('hide')
+                        }
+                    }
+                });
+
+
+
+            })
+
+
+
+        })
+    </script>
+}
+

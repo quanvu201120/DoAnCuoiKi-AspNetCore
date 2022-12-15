@@ -33,6 +33,12 @@ namespace DoAnCuoiKi.Controllers
             if (acccount != null)
             {
 
+                if(acccount.isDelete == true)
+                {
+                    ViewBag.loi = "Tài khoản đã bị vô hiệu hóa";
+                    return View("Index");
+                }
+
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name,acccount.name),

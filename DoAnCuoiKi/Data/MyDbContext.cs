@@ -27,7 +27,8 @@ namespace DoAnCuoiKi.Data
                 gender = "Nam",
                 role = "Admin",
                 phone = "0338786222",
-                address = "VN"
+                address = "VN",
+                isDelete = false
             };
 
             var listCate = new List<Category>

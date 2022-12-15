@@ -1,0 +1,87 @@
+﻿@model IEnumerable<DoAnCuoiKi.Data.User>
+
+@{
+    ViewData["Title"] = "Restore";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1 class="text-center text-info">Khôi phục tài khoản đã xóa</h1>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tên tài khoản
+            </th>
+
+            <th>
+                Email
+            </th>
+
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.email)
+                </td>
+
+                <td>
+                    <div class="btn btn-danger userAdmin-btnRestoreUser" data-id="@item.userId">Khôi phục</div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(() => {
+
+
+
+            (() => {
+                var btnRestores = document.querySelectorAll('.userAdmin-btnRestoreUser');
+                btnRestores.forEach(item => {
+                    item.addEventListener('click', restoreProduct);
+                });
+            })();
+
+            function restoreProduct() {
+
+
+                var id = this.getAttribute("data-id");
+                $.ajax({
+                    url: "HandleRestore",
+                    type: "post",
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data == true) {
+                            alert("Khôi phục thành công!")
+                            window.location.reload()
+                        }
+                        else {
+                            alert("Khôi phục thất bại!")
+                        }
+                    }
+                });
+
+            }
+
+
+        })
+    </script>
+}
+

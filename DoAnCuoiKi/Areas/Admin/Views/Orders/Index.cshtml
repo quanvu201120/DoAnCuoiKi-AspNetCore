@@ -5,80 +5,82 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h1 class="text-center text-info">Đơn hàng</h1>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.customerName)
+                Khách hàng
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.customerAddress)
+                Ngày đặt hàng
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.customerEmail)
+                Ngày nhận hàng
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.customerPhone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.otherInformation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.totalPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.dateCreate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.user)
+                Trạng thái đơn hàng
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
+            var trangthai = item.status == 0 ? "Chờ vận chuyển" : item.status == 1 ? "Đang giao" : "Đã giao";
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.customerName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.customerAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.customerEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.customerPhone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.otherInformation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.totalPrice)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.dateCreate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.status)
+                @Html.DisplayFor(modelItem => item.dateReceive)
+            </td>
+            
+            <td>
+                @trangthai
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.user.userId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.orderId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.orderId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.orderId">Delete</a>
+                    <a class="text-light btn btn-warning order--btn-click-order-item text-center  d-block m-0 w-100" data-id="@item.orderId" href="#">Chi tiết</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+
+
+@section Scripts{
+    <script>
+        $(document).ready(() => {
+
+
+            
+            (() => {
+                var btnClicks = document.querySelectorAll('.order--btn-click-order-item');
+                btnClicks.forEach(item => {
+                    item.addEventListener('click', onClickOrderItem);
+                });
+            })();
+
+            function onClickOrderItem() {
+                var orderId = this.getAttribute("data-id");
+
+
+                $.ajax({
+                    url: "Orders/HandleClickOrderAdmin",
+                    type: "post",
+                    data: {
+                        orderId: orderId,
+                    },
+                    success: function (data) {
+                        window.location.href = data
+                        //console.log("path: ", data)
+                    }
+                });
+            }
+
+        })
+    </script>
+}

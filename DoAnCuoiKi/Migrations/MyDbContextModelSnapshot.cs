@@ -385,6 +385,9 @@ namespace DoAnCuoiKi.Migrations
                     b.Property<string>("gender")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("isDelete")
+                        .HasColumnType("bit");
+
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
 
@@ -408,6 +411,7 @@ namespace DoAnCuoiKi.Migrations
                             address = "VN",
                             email = "admin@gmail.com",
                             gender = "Nam",
+                            isDelete = false,
                             name = "admin",
                             password = "123123",
                             phone = "0338786222",

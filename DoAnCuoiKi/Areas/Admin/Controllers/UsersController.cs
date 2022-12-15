@@ -24,7 +24,7 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
         // GET: Admin/Users
         public async Task<IActionResult> Index()
         {
-              return View(await _context.users.ToListAsync());
+              return View(await _context.users.Where(item => item.isDelete == false).ToListAsync());
         }
 
         // GET: Admin/Users/Details/5
@@ -56,10 +56,16 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("userId,name,phone,email,gender,password,address,role")] User user)
+        public async Task<IActionResult> Create([Bind("name,phone,email,gender,password,address,role")] User user)
         {
             if (ModelState.IsValid)
             {
+
+                var check = await _context.users.FirstOrDefaultAsync(item => item.email == user.email);
+
+                if (check != null) { return View(user); }
+
+                user.isDelete = false;
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -99,6 +105,15 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
             {
                 try
                 {
+                    var check = await _context.users.FirstOrDefaultAsync(item => item.email == user.email && item.userId != user.userId);
+
+                    if (check != null) {
+                        ViewBag.check = "Email đã tồn tại!";
+                        return View(user);
+                    }
+
+
+                    user.isDelete = false;
                     _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
@@ -155,9 +170,56 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
+        public async Task<Boolean> HandleDeleteAccountAdmin(int id)
+        {
+
+            var account = await _context.users.FirstOrDefaultAsync(item => item.userId == id);
+
+            if (account == null)
+            {
+                return false;
+            }
+
+            account.isDelete = true;
+            _context.users.Update(account);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
         private bool UserExists(int? id)
         {
           return _context.users.Any(e => e.userId == id);
         }
+
+
+        public async Task<IActionResult> Restore()
+        {
+            var users = await _context.users.Where(item => item.isDelete == true).ToListAsync();
+
+            return View(users);
+        }
+        [HttpPost]
+        public async Task<Boolean> HandleRestore(int id)
+        {
+            if (id == null)
+            {
+                return false;
+            }
+
+            var user = await _context.users.FirstOrDefaultAsync(item => item.userId == id);
+
+            if (user == null) { return false; }
+
+            user.isDelete = false;
+            _context.users.Update(user);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+
+
     }
 }

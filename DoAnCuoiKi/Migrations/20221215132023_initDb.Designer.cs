@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DoAnCuoiKi.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20221128061929_initDb")]
+    [Migration("20221215132023_initDb")]
     partial class initDb
     {
         /// <inheritdoc />
@@ -388,6 +388,9 @@ namespace DoAnCuoiKi.Migrations
                     b.Property<string>("gender")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("isDelete")
+                        .HasColumnType("bit");
+
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
 
@@ -411,6 +414,7 @@ namespace DoAnCuoiKi.Migrations
                             address = "VN",
                             email = "admin@gmail.com",
                             gender = "Nam",
+                            isDelete = false,
                             name = "admin",
                             password = "123123",
                             phone = "0338786222",
