@@ -5,28 +5,31 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Edit</h1>
+<h1 class="text-center text-light">Cập nhật danh mục</h1>
 
-<h4>Category</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="categoryId" />
+    <div class="col-md-4" style="margin: 0  auto;">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div class="form-group">
-                <label asp-for="name" class="control-label"></label>
-                <input asp-for="name" class="form-control" />
-                <span asp-validation-for="name" class="text-danger"></span>
+                <label class="control-label">Mã danh mục</label>
+                <input name="id" class="form-control" readonly value="@Model.categoryId" />
             </div>
+
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label class="control-label">Tên danh mục</label>
+                <input name="name" class="form-control" required value="@Model.name" />
             </div>
+
+            <div class="form-group text-center d-flex justify-content-evenly mt-3">
+                <div class="btn btn-warning">
+                    <a style="text-decoration:none; color:white;" asp-action="Index">Quay lại</a>
+                </div>
+                <input type="submit" value="Xác nhận" class="btn btn-primary" />
+            </div>
+
+
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 

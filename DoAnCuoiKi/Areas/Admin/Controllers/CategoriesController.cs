@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DoAnCuoiKi.Data;
 using Microsoft.AspNetCore.Authorization;
+using DoAnCuoiKi.Areas.Admin.Models;
+using Microsoft.IdentityModel.Abstractions;
 
 namespace DoAnCuoiKi.Areas.Admin.Controllers
 {
@@ -24,7 +26,10 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
         // GET: Admin/Categories
         public async Task<IActionResult> Index()
         {
-              return View(await _context.categories.ToListAsync());
+            var data = await _context.categories
+              .Where(item => item.isDelete == false)
+              .ToListAsync();
+            return View(data);
         }
 
         // GET: Admin/Categories/Details/5
@@ -88,34 +93,19 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("categoryId,name")] Category category)
+        public async Task<IActionResult> Edit(int id, string name)
         {
-            if (id != category.categoryId)
+            var category = await _context.categories.FirstOrDefaultAsync(item => item.categoryId == id);
+            if (category == null)
             {
-                return NotFound();
+                return View();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(category);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CategoryExists((int)category.categoryId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(category);
+            category.name = name;
+            _context.categories.Update(category);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("index");
         }
 
         // GET: Admin/Categories/Delete/5
@@ -137,6 +127,8 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
         }
 
         // POST: Admin/Categories/Delete/5
+
+        /*
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -154,10 +146,55 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        */
+
+        [HttpPost]
+        public async Task<Boolean> HandleDeleteCategoryAdmin(int id)
+        {
+
+            var category = await _context.categories.FirstOrDefaultAsync(item => item.categoryId == id);
+
+            if (category == null)
+            {
+                return false;
+            }
+
+            category.isDelete = true;
+            _context.categories.Update(category);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
 
         private bool CategoryExists(int id)
         {
           return _context.categories.Any(e => e.categoryId == id);
+        }
+
+        public async Task<IActionResult> Restore()
+        {
+            var categories = await _context.categories.Where(item => item.isDelete == true).ToListAsync();
+
+            return View(categories);
+        }
+        [HttpPost]
+        public async Task<Boolean> HandleRestore(int id)
+        {
+            if (id == null)
+            {
+                return false;
+            }
+
+            var category = await _context.categories.FirstOrDefaultAsync(item => item.categoryId == id);
+
+            if (category == null) { return false; }
+
+            category.isDelete = false;
+
+            _context.categories.Update(category);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }
