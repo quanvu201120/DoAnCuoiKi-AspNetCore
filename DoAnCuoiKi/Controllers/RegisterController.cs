@@ -34,9 +34,12 @@ namespace DoAnCuoiKi.Controllers
             {
                 context.Add(user);
                 await context.SaveChangesAsync();
-                return RedirectToAction("Index","Login");
+                ViewBag.success = "tài khoản thành công!";
+                return View(null);
             }
-            return View("Index");
+
+            ViewBag.check = "Email đã tồn tại!";
+            return View(user);
         }
 
 
