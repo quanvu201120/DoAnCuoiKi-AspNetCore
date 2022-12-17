@@ -94,6 +94,8 @@
 
                 const priceSelect = this.value;
                 const brandId = $("#home-select-brandId-filter").val();
+                const search = $(".home-input-search").val();
+
 
                 $.ajax({
                     url: "/home/hanleclickfilter",
@@ -102,6 +104,7 @@
                         categoryid: @Model.categoryId,
                         brandid: brandId,
                         price: priceSelect,
+                        search: search
                     },
                     success: function (data) {
                         window.location.href = data;
@@ -112,11 +115,16 @@
             $('.btn-search-home').click( function () {
 
                 const search = $(".home-input-search").val();
+                const price = $("#home-select-price-filter").val();
+                const brandId = $("#home-select-brandId-filter").val();
 
                 $.ajax({
                     url: "/home/hanleclickfilter",
                     type: "post",
                     data: {
+                         categoryId: @Model.categoryId,
+                        brandId: brandId,
+                        price: price,
                         search: search
                     },
                     success: function (data) {

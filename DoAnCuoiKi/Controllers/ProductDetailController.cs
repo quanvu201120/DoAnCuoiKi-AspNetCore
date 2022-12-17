@@ -26,6 +26,9 @@ namespace DoAnCuoiKi.Controllers
                 return RedirectToAction("Index","NotFoundCustomer");
             }
 
+            var brand = _context.brands.FirstOrDefault(item => item.brandId == product.brandId);
+            ViewBag.brandName = brand.name;
+
             return View(product);
         }
 
