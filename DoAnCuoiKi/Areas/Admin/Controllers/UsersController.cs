@@ -173,10 +173,11 @@ namespace DoAnCuoiKi.Areas.Admin.Controllers
         [HttpPost]
         public async Task<Boolean> HandleDeleteAccountAdmin(int id)
         {
+            var userId = HttpContext.User.Claims.FirstOrDefault(item => item.Type == "userId").Value;
 
             var account = await _context.users.FirstOrDefaultAsync(item => item.userId == id);
 
-            if (account == null)
+            if (account == null || account.userId.ToString() == userId)
             {
                 return false;
             }
